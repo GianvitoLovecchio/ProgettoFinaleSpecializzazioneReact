@@ -14,7 +14,7 @@ export default function Routing() {
                     {/* <Route path="*" element={<ErrorPage />} /> */}
                     <Route path="/games/:genre" element={<GenrePage_index />} />
                     <Route path="/games/:slug/:id" element={<GamePage_index />} />
-                    <Route path="/search" element={<SearchPage_index />} />
+                    <Route path="/search/" element={<SearchPage_index />} />
                 </Route>
             </Routes>
         </BrowserRouter>

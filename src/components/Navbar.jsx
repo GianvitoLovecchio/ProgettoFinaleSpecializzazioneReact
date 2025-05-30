@@ -7,13 +7,13 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-white  mb-4 w-full z-50">
+    <nav className="sticky top-0 left-0 bg-blue-100 w-full z-50">
       <div className="pl-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* LOGO */}
           <Link to="/">
           <div className="flex-shrink-0 ">
-            <span className="text-4xl font-bold text-blue-600">react</span><span className="text-4xl font-extrabold text-red-700">GAME</span>
+            <span className="text-4xl font-bold text-blue-600">react</span><span className="text-4xl font-extrabold text-red-600">GAME</span>
           </div>
           </Link>
 
@@ -21,18 +21,18 @@ export default function Navbar() {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-4">
-            <a href="#" className="text-gray-700 hover:text-blue-600">Home</a>
-            <a href="#" className="text-gray-700 hover:text-blue-600">About</a>
-            <a href="#" className="text-gray-700 hover:text-blue-600">Contact</a>
+            <a href="#" className="text-blue-600 font-bold text-lg hover:text-blue-600">Home</a>
+            <a href="#" className="text-blue-600 font-bold text-lg hover:text-blue-600">About</a>
+            <a href="#" className="text-blue-600 font-bold text-lg hover:text-blue-600">Contact</a>
           </div>
 
           {/* Mobile Button */}
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-700 focus:outline-none"
+              className="text-blue-600 font-bold focus:outline-none m-2"
             >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isOpen ? <X strokeWidth={2.25} className="w-12 h-8" /> : <Menu strokeWidth={2.25} className="w-12 h-8" />}
             </button>
           </div>
         </div>
@@ -41,9 +41,9 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-white shadow-md px-4 py-2 space-y-2">
-          <a href="#" className="block text-gray-700 hover:text-blue-600">Home</a>
-          <a href="#" className="block text-gray-700 hover:text-blue-600">About</a>
-          <a href="#" className="block text-gray-700 hover:text-blue-600">Contact</a>
+          <a href="#" className="block text-blue-600 hover:text-blue-600">Home</a>
+          <a href="#" className="block text-blue-600 hover:text-blue-600">About</a>
+          <a href="#" className="block text-blue-600 hover:text-blue-600">Contact</a>
         </div>
       )}
     </nav>
