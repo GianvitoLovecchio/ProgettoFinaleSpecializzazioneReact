@@ -1,20 +1,25 @@
 import LazyLoadGameImage from "./LazyLoadGameImage"
+import { Link } from "react-router"
 
 export default function CardGame({ game }) {
     return (
         <>
-            <div className="m-2 p-4 border-2 border-black">
-                <h1 className="h-12 font-semibold">{game.name}</h1>
-                <div className="flex flex-wrap h-15 items-top">
+            <div className="m-2 p-4 rounded-xl shadow-md bg-blue-50 grid justify-between ">
+                <h1 className="font-semibold">{game.name}</h1>
+                <div className="flex flex-wrap h-10 items-center">
                     {game.genres.map((genre) => (
-                        <p className="h-5 text-[10px] font-light border boder-black rounded-lg bg-black text-white py-0.5 px-1 mx-1" key={genre.id}>{genre.name}</p>
+                        <p className="h-5 text-[10px] font-semibold border boder-red-700 rounded-lg bg-red-700 text-white py-0.5 px-2 mx-1" key={genre.id}>{genre.name}</p>
                     ))}
                 </div>
                 <div className="flex items-center">
-                    <LazyLoadGameImage image={game.background_image}/>
+                    <LazyLoadGameImage image={game.background_image} />
                 </div>
                 <div className="flex justify-end">
-                    <button className="bg-black border border-black rounded-lg text-white mt-2 py-1 px-2 hover:font-bold hover:bg-gray-300 hover:text-black cursor-pointer">Scopri</button>
+                    <Link to={`/games/${game.slug}/${game.id}`}> 
+                        <button className="bg-red-800 border border-red-800 rounded-lg text-white mt-4 py-1 px-2 hover:scale-105 transition duration-250 hover:bg-blue-50 hover:text-black cursor-pointer">
+                            Scopri
+                        </button>
+                    </Link>
                 </div>
             </div>
         </>

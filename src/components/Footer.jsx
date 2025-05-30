@@ -1,30 +1,20 @@
-import React from 'react';
-import { Box, Typography, Container, Link } from '@mui/material';
-
 export default function Footer() {
   return (
-    <Box
-      component="footer"
-      sx={{
-        py: 3,
-        px: 2,
-        mt: 'auto',
-        backgroundColor: "#d8e2dc",
-      }}
-    >
-      <Container sx={{ backgroundColor: "#d8e2dc", color: "black"}}>
-        <Typography variant="body1" align="center">
+    <footer className="bg-[#d8e2dc] text-black py-6 mt-auto">
+      <div className="container mx-auto px-4 text-center">
+        <p className="text-base">
           © {new Date().getFullYear()} Il Tuo Nome o Azienda. Tutti i diritti riservati.
-        </Typography>
-        <Typography variant="body2" color="text.secondary" align="center" mt={1}>
-          <Link href="/privacy" color="inherit" underline="hover">
+        </p>
+        <p className="text-sm text-gray-600 mt-2">
+          <a href="" className="hover:underline">
             Privacy Policy
-          </Link>{' '}|{' '}
-          <Link href="/terms" color="inherit" underline="hover">
+          </a>{' '}
+          |{' '}
+          <a href="" className="hover:underline">
             Termini e Condizioni
-          </Link>
-        </Typography>
-      </Container>
-    </Box>
+          </a>
+        </p>
+      </div>
+    </footer>
   );
 }
