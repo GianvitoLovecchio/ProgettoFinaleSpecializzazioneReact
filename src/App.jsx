@@ -1,3 +1,5 @@
+import SessionProvider from './context/SessionProvider';
+import { ProfileProvider } from './context/ProfileProvider';
 import './global.css';
 import Routing from './routes/Routing';
 
@@ -5,7 +7,11 @@ import Routing from './routes/Routing';
 function App() {
 
   return (
-    <Routing />
+    <SessionProvider>
+      <ProfileProvider>
+        <Routing />
+      </ProfileProvider>
+    </SessionProvider>
   )
 }
 

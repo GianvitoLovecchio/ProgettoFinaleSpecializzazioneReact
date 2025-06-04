@@ -18,9 +18,9 @@ export default function GenresDropdown() {
 
 
                 {error && <small>{error}</small>}
-                <ul>
+                <ul className="py-2">
                     {data?.results.map((genre) => (
-                        <li className="ml-2 text-blue-600 font-semibold text-md my-1" key={genre.id}>
+                        <li className="ml-2 text-md font-semibold text-blue-600 hover:text-lg hover:font-bold py-1" key={genre.id}>
                             <Link to={ `/games/${genre.slug}`}> {genre.name} </Link>
                         </li>
                     ))}
