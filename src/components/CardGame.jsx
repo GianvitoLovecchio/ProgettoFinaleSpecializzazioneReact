@@ -10,7 +10,7 @@ export default function CardGame({ game }) {
                     {game.genres.map((genre) => (
                         // console.log(genre.name)
                         <Link to={`/games/${genre.slug}`}>
-                            <p className="h-5 text-[10px] font-semibold border boder-red-700 rounded-lg bg-red-700 text-white py-0.5 px-2 mx-1" key={genre.id}>{genre.name}</p>
+                            <p className="h-5 text-[10px] font-semibold border border-red-700 rounded-lg bg-red-700 text-white py-0.5 px-2 mx-1" key={genre.id}>{genre.name}</p>
                         </Link>
                     ))}
                 </div>

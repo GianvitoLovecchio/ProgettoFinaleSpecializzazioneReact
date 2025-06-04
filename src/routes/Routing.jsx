@@ -2,6 +2,9 @@ import HomePage_index from '../pages/homepage/HomePage_index';
 import GenrePage_index from '../pages/genrepage/GenrePage_index';
 import GamePage_index from '../pages/gamepage/GamePage_index';
 import SearchPage_index from '../pages/searchpage/SearchPage_index';
+import Register_index from '../pages/register/Register_index';
+import Login_index from '../pages/login/Login_index';
+import Error_page from '../pages/error/Error_page'; 
 import Layout from '../layout/Layout';
 import { BrowserRouter, Routes, Route } from 'react-router';
 
@@ -11,10 +14,12 @@ export default function Routing() {
             <Routes>
                 <Route element={<Layout />}>
                     <Route path="/" element={<HomePage_index />} />
-                    {/* <Route path="*" element={<ErrorPage />} /> */}
+                    <Route path="*" element={<Error_page />} />
                     <Route path="/games/:genre" element={<GenrePage_index />} />
                     <Route path="/games/:slug/:id" element={<GamePage_index />} />
                     <Route path="/search/" element={<SearchPage_index />} />
+                    <Route path="/register" element={<Register_index />}></Route>
+                    <Route path="/login" element={<Login_index />}></Route>
                 </Route>
             </Routes>
         </BrowserRouter>

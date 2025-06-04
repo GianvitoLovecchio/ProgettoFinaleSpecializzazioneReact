@@ -1,10 +1,49 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X, Search } from "lucide-react"; // Installa con: npm install lucide-react
 import { Link } from "react-router";
 import SearchBar from "./SearchBar";
+import supabase from "../supabase/supabase-client";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [session, setSession] = useState(null);
+
+  // Ottiene la sessione
+  const getSession = async () => {
+    const { data } = await supabase.auth.getSession();
+    if (data.session) {
+      console.log(data)
+      setSession(data.session);
+    } else {
+      setSession(null);
+    }
+  };
+
+  const signOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) console.log(error);
+    alert("Logout effettuato con successo");
+    getSession();
+  }
+
+  useEffect(() => {
+    const getSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      setSession(data.session);
+    };
+
+    getSession();
+
+    // onAuthStateChange è una funzione di supabase che intercetta i cambiamenti di sessione
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log("Auth event:", event, session);
+      setSession(session);
+    });
+
+    return () => {
+    authListener.subscription.unsubscribe();
+  };
+  }, []);
 
   return (
     <nav className="sticky top-0 left-0 bg-blue-100 w-full z-50">
@@ -12,19 +51,31 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
           {/* LOGO */}
           <Link to="/">
-          <div className="flex-shrink-0 ">
-            <span className="text-4xl font-bold text-blue-600">react</span><span className="text-4xl font-extrabold text-red-600">GAME</span>
-          </div>
+            <div className="flex-shrink-0 ">
+              <span className="text-4xl font-bold text-blue-600">react</span><span className="text-4xl font-extrabold text-red-600">GAME</span>
+            </div>
           </Link>
 
-          <SearchBar/>
+          <SearchBar />
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-4">
-            <a href="#" className="text-blue-600 font-bold text-lg hover:text-blue-600">Home</a>
-            <a href="#" className="text-blue-600 font-bold text-lg hover:text-blue-600">About</a>
-            <a href="#" className="text-blue-600 font-bold text-lg hover:text-blue-600">Contact</a>
-          </div>
+          {session ? (
+            <div className="hidden md:flex space-x-4">
+              <p href="#" className="text-blue-600 font-bold text-lg hover:text-blue-600">Ciao {session.user.user_metadata.username}</p>
+              <button onClick={signOut} href="#" className="cursor-pointer text-blue-600 font-bold text-lg hover:text-blue-600">Logout</button>
+            </div>
+          ) : (
+            // se non sei sutenticato
+            <div className="hidden md:flex space-x-4">
+              <Link to={"/register"}>
+                <p href="#" className="text-blue-600 font-bold text-lg hover:text-blue-600">Registrati</p>
+              </Link>
+              <Link to={"/login"}>
+                <p href="#" className="text-blue-600 font-bold text-lg hover:text-blue-600">Login</p>
+              </Link>
+            </div>
+          )
+          }
 
           {/* Mobile Button */}
           <div className="md:hidden">
