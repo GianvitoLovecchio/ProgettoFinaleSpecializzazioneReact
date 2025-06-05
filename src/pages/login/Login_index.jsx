@@ -32,14 +32,12 @@ export default function Login_index() {
         setFormSubmitted(true);
         //effettua la validazione
         const { error, data } = ConfirmSchemaLogin.safeParse(formState);
-        console.log("Zod raw error:", error);
         //se ci sono errori, setta l'oggetto con gli errori
         if (error) {
             //viene richiamata la funzione per ottenere gli errori
             const errors = getErrors(error);
             //setta l'oggetto con gli errori risultanti dalla funzione appena richiamata
             setFormErrors(errors);
-            console.log(errors)
         } else {
             //se non ci sono errori, effettua la registrazione dell'utente utilizzando nmail e password come dati
             let { error } = await supabase.auth.signInWithPassword({

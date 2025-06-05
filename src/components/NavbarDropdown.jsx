@@ -16,7 +16,6 @@ export default function NavbarDropdown({ label = "Menu", items = [] }) {
     
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
-    if (error) console.log(error);
 
     alert("Logout effettuato con successo");
     navigate("/");

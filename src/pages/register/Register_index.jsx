@@ -264,7 +264,6 @@ export default function RegistrationForm() {
                                     className="hidden px-3 py-1 focus:outline-none "
                                 />
                                 {/* anteprima immagine caricata */}
-                                {console.log(formState.avatar_url)}
                                 {previewUrl && (
                                     <div className="mt-2">
                                         <img
