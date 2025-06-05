@@ -10,12 +10,14 @@ export default function NavbarDropdown({ label = "Menu", items = [] }) {
     const menuRef = useRef();
     const navigate = useNavigate();
     const {setProfile,  setAvatarImgUrl } = useProfile();
+    const [logout, setLogout] = useState(null);
 
 
     
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) console.log(error);
+
     alert("Logout effettuato con successo");
     navigate("/");
     setProfile(null);
