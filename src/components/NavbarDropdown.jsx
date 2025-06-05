@@ -32,7 +32,7 @@ export default function NavbarDropdown({ label = "Menu", items = [] }) {
             {/* Bottone del dropdown nella navbar */}
             <button
                 onClick={() => setOpen(!open)}
-                className="inline-flex items-center gap-1 px-3 py-2 cursor-pointer text-blue-600 font-bold text-lg hover:text-blue-600"
+                className="inline-flex items-center gap-1 px-1 py-2 cursor-pointer text-blue-600 font-bold text-lg hover:text-blue-600"
             >
                 {label}
                 <ChevronDown size={18} strokeWidth={3} className={`duration-700 text-red-700 transition-transform ${open ? "rotate-180" : ""}`} />
@@ -40,7 +40,7 @@ export default function NavbarDropdown({ label = "Menu", items = [] }) {
 
             {/* Dropdown menu visibile su click */}
             {open && (
-                <div className="absolute right-0 mt-2 w-44 origin-top-right bg-white border border-gray-200 rounded-md shadow-lg z-50">
+                <div className="absolute ml-10 mb-10 right-0 py-2 mt-2 w-50 origin-top-right bg-white border  border-gray-200 rounded-md shadow-2xl z-50">
                     {items.map((item, index) => (
                         <Link
                             key={index}

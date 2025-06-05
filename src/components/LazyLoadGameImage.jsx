@@ -4,7 +4,7 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 export default function LazyLoadGameImage({ image }) {
 
     return (
-        <div className="w-full my-2 overflow-hidden">
+        <div className="w-full max-h-40 my-2 overflow-hidden">
             <LazyLoadImage
                 src={image}
                 alt="game"

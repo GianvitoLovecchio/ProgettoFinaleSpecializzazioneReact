@@ -11,7 +11,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const { session } = useContext(SessionContext);
-  const { profile } = useProfile();
+  const { profile, avatarImgUrl } = useProfile();
 
   return (
     <nav className="sticky top-0 left-0 bg-blue-100 w-full z-50">
@@ -28,8 +28,17 @@ export default function Navbar() {
 
           {/* Desktop Menu */}
           {session ? (
-            <div className="hidden md:flex space-x-4">
+            <div className="hidden md:flex space-x-1">
               {/* <p href="#" className="text-blue-600 font-bold text-lg hover:text-blue-600">Ciao {session.user.user_metadata.username}</p> */}
+              <span className="flex items-center">
+                {avatarImgUrl && (
+                  <img
+                  src={avatarImgUrl}
+                  alt="Avatar"
+                  className=" w-8 h-8 rounded-full object-cover"
+                  />
+                )}
+              </span>
               <NavbarDropdown
                 label={`Ciao ${profile?.username}`}
                 items={[

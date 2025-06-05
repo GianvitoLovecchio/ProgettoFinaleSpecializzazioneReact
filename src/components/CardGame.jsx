@@ -7,9 +7,9 @@ export default function CardGame({ game }) {
             <div className="m-2 p-4 rounded-xl shadow-md bg-blue-50 grid justify-between ">
                 <h1 className="font-semibold">{game.name}</h1>
                 <div className="flex flex-wrap h-10 items-center">
-                    {game.genres.map((genre) => (
+                    {game.genres.map((genre, index) => (
                         // console.log(genre.name)
-                        <Link to={`/games/${genre.slug}`}>
+                        <Link key={index} to={`/games/${genre.slug}`}>
                             <p className="h-5 text-[10px] font-semibold border border-red-700 rounded-lg bg-red-700 text-white py-0.5 px-2 mx-1" key={genre.id}>{genre.name}</p>
                         </Link>
                     ))}
