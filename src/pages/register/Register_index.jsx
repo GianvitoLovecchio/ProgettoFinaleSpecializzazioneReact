@@ -5,13 +5,14 @@ import PasswordForm from "../../components/PasswordForm";
 import supabase from "../../supabase/supabase-client";
 import { useNavigate } from "react-router";
 import noImage from "../../img/no_img_profile.png";
-// import Avatar from "../../components/Avatar";
+import Message from "../../components/Message";
 
 
 export default function RegistrationForm() {
     const navigate = useNavigate();
-    //utilizzato per capire se il form è stato inviato almeno una volta
-    const [fromSubmitted, setFormSubmitted] = useState(false);
+
+    //stato per la visualizzazione dei messaggi di errore/successo
+    const [signInState, setSignInState] = useState(null);
 
     // Stato unico per la form con valori e errori
     const [formState, setFormState] = useState({
@@ -74,17 +75,18 @@ export default function RegistrationForm() {
 
         //se ci sono errori, mostra un messaggio di errore
         if (signUpError) {
-            alert("La registrazione non è andata a buon fine");
+            setSignInState(false)
             return;
             //altrimenti mostra un messaggio di successo e reindirizza alla home dopo 2 secondi
         } else {
-            alert("La resistrazione è stata effettuata con successo! Verrai reindirizzato alla homepage.");
-            setTimeout(() => navigate("/"), 1000);
+            // alert("La resistrazione è stata effettuata con successo! Verrai reindirizzato alla homepage.");
+            // setTimeout(() => navigate("/"), 1000);
+            setSignInState(true)
         }
     }
 
     //valida un determinato campo non appena viene popolato ed abbandonato dall'utente
-    //riceve il campo in ingresso, property
+    //riceve il campo in ingresso, field
     const onBlur = (field) => () => {
         //viene richiamata la funzione per ottenere gli errori
         const errorMessage = getFieldError(field, formState[field]);
@@ -95,26 +97,10 @@ export default function RegistrationForm() {
     }
 
     //determina se un campo è da considerare non valido o meno, per mostrare gli errori visivamente
-    const isInvalid = (field) => {
-        //se il campo non è stato toccato, restituisce undefined
-        if (fromSubmitted || touchedFields[field]) {
-            //se il campo ha un errore, restituisce true
-            return !!formErrors[field];
-        }
-        return undefined;
-    }
+    const isInvalid = (field) => touchedFields[field] && !!formErrors[field];
 
     //funzione per impostare il valore di un determinato campo
     //riceve il campo in ingresso, property ed un'opzionale funzione per ottenere il valore tramite una specifica estrazione
-    // const setField = (property, valueSelector) => (e) => {
-    //     //setta il campo
-    //     setFormState((prev) => ({
-    //         //viene copiato l'oggetto precedente e viene aggiunto il nuovo valore
-    //         ...prev,
-    //         //il nuovo valore viene assegnato al campo
-    //         [property]: valueSelector ? valueSelector(e) : (e.target.value)
-    //     }));
-    // }
     const setField = (field) => (e) => {
         const value = e.target.value;
         setFormState((prev) => ({ ...prev, [field]: value }));
@@ -163,6 +149,20 @@ export default function RegistrationForm() {
     return (
         <>
             <h1 className="text-3xl text-blue-600 font-semibold mb-5">Registrazione</h1>
+            {signInState === false &&
+                <Message
+                    message="La resistrazione non è andata a buon fine!"
+                    esito={signInState}
+                    redirectState={signInState}
+                    setState={setSignInState} />
+            }
+            {signInState === true &&
+                <Message
+                    message="La resistrazione è andata a buon fine, a breve verrai reindirizzata alla homepage!"
+                    esito={signInState}
+                    redirectState={signInState}
+                    redirect="/" />
+            }
             <div className="flex items-center justify-center p-4 ">
                 <div className="w-full max-w-4/5 ">
                     <form

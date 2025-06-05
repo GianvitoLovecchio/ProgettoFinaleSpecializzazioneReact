@@ -1,15 +1,12 @@
 import { useState } from "react";
-import {
-    FormSchemaLogin,
-    ConfirmSchemaLogin,
-    getErrors,
-    getFieldErrorLogin,
-} from "../../lib/validationForm";
+import { FormSchemaLogin, ConfirmSchemaLogin, getErrors, getFieldErrorLogin } from "../../lib/validationForm";
 import InputFormRegistration from "../../components/InputFormRegistration";
 import PasswordForm from "../../components/PasswordForm";
 import supabase from "../../supabase/supabase-client";
 import { useNavigate } from "react-router";
+import Message from "../../components/Message";
 import { X } from "lucide-react";
+import { set } from "zod/v4";
 
 export default function Login_index() {
     const navigate = useNavigate();
@@ -25,8 +22,9 @@ export default function Login_index() {
         email: "",
         password: "",
     });
-    const [loginError, setLoginError] = useState(false);
+    // const [loginError, setLoginError] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [loginState, setLoginState] = useState(null);
 
     const onSubmit = async (event) => {
         event.preventDefault();
@@ -50,13 +48,12 @@ export default function Login_index() {
             });
             //se ci sono errori, mostra un messaggio di errore
             if (error) {
-                setLoginError(true);
+                // setLoginError(true);
+                setLoginState(false);
                 //altrimenti mostra un messaggio di successo e reindirizza alla home dopo 2 secondi
             } else {
-                setLoginError(false);
-                alert("Login effettuato con successo! Verrai reindirizzato alla homepage.");
-                await new Promise((resolve) => setTimeout(resolve, 1000));
-                navigate("/");
+                // setLoginError(false);
+                setLoginState(true);
             }
         }
     }
@@ -92,20 +89,36 @@ export default function Login_index() {
 
     return (
         <>
-            <h1 className="text-3xl text-blue-600 font-semibold mb-5">Form di login</h1>
+            <h1 className="text-3xl text-blue-600 font-semibold mb-5">Login</h1>
+
+            {loginState === false &&
+                <Message
+                    message="Email o password errati, riprova per favore!"
+                    esito={loginState}
+                    redirectState={loginState}
+                    setState={setLoginState} />
+            }
+
+            {loginState === true &&
+                <Message
+                    message="Login effettuato con successo, a breve verrai reindirizzato alla homepage!"
+                    esito={loginState}
+                    redirectState={loginState}
+                    redirect="/" />
+            }
             <div className="flex items-center justify-center p-4 ">
                 <div className="w-full max-w-4/5 ">
                     <form
                         onSubmit={onSubmit}
                         className="p-10 rounded-xl shadow-md bg-blue-50">
-                        {
+                        {/* {
                             loginError &&
                                 <div className="flex px-2 justify-between mb-4 py-2 bg-red-200 rounded-md text-center text-red-800 font-bold text-xl ">
                                     Indirizzo email o password errati, riprova per favore!
                                         <button type="button" onClick={() => { setLoginError(false) }} className="mr-1 flex items-top cursor-pointer float-right"><X size={20} />
                                         </button>
                                 </div>
-                        }
+                        } */}
                         {/* Email */}
                         <div className="mb-4">
                             <InputFormRegistration
