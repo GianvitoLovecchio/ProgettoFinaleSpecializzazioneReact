@@ -1,32 +1,31 @@
 import { useState, useEffect } from "react";
 import supabase from "../supabase/supabase-client";
 import noImageProfile from '../img/no_img_profile.png'
+import { useProfile } from "../context/ProfileProvider";
 
 export default function Avatar({ url, size, onUpload }) {
-    const [avatarUrl, setAvatarUrl] = useState(null)
+    const { avatarImgUrl, setAvatarImgUrl } = useProfile();
     const [uploading, setUploading] = useState(false)
 
 
     useEffect(() => {
-        if (url) downloadImage(url)
-    }, [url])
-
-    //funzione di scaricamento immagine
-    const downloadImage = async (path) => {
-        try {
-            const { data, error } = await supabase.storage
-                .from('avatars')
-                .download(path)
-            if (error) {
-                throw error
+        //funzione di scaricamento immagine
+        const downloadImage = async (path) => {
+            try {
+                const { data, error } = await supabase.storage
+                    .from('avatars')
+                    .download(path)
+                if (error) {
+                    throw error
+                }
+                const url = URL.createObjectURL(data)
+                setAvatarImgUrl(url)
+            } catch (error) {
+                console.log('Errore scaricamento immagine: ', error)
             }
-            const url = URL.createObjectURL(data)
-            setAvatarUrl(url)
-
-        } catch (error) {
-            console.log('Errore scaricamento immagine: ', error.message)
         }
-    }
+        if (url) downloadImage(url);
+    }, [url, setAvatarImgUrl]);
 
     //funzione di caricamento immagine
     const uploadAvatar = async (event) => {
@@ -57,12 +56,13 @@ export default function Avatar({ url, size, onUpload }) {
         } finally {
             setUploading(false)
         }
-    }
+    };
+
     return (
         <div className="mb-6 flex justify-evenly">
-            {avatarUrl ? (
+            {avatarImgUrl ? (
                 <img
-                    src={avatarUrl}
+                    src={avatarImgUrl}
                     alt="avatar"
                     style={{ width: size, height: size }}
                     className="rounded-full object-cover"

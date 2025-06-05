@@ -16,7 +16,8 @@ export const FormSchema = z.object({
         .min(1, "Il numero di telefono è obbligatorio")
         .min(9, "Il numero di telefono deve contenere almeno 9 cifre")
         .max(12, "Il numero di telefono deve contenere massimo 12 cifre")
-        .regex(/^\d+$/, "Il numero di telefono deve contenere solo cifre")
+        .regex(/^\d+$/, "Il numero di telefono deve contenere solo cifre"),
+    avatar_url: z.string().optional(),
 });
 
 export const FormSchemaLogin = z.object({

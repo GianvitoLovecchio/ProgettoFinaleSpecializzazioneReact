@@ -12,7 +12,9 @@ export const ProfileProvider = ({ children }) => {
   useEffect(() => {
     const getProfile = async () => {
       // controlla che ci siano dati di sesssione, ovvero che l'utente sia loggato
-      if (!session?.user) return;
+      if (!session?.user) {
+        return;
+      }
 
       // tramite Supabase vengono scaricati tutti i dati del profilo
       const { data, error } = await supabase
@@ -26,7 +28,6 @@ export const ProfileProvider = ({ children }) => {
       } else {
         setProfile(data);
       }
-
       // tramite Supabase viene scaricata l'immagine da avatars
       if (data.avatar_url) {
         const { data: imageData, error: imageError } = await supabase

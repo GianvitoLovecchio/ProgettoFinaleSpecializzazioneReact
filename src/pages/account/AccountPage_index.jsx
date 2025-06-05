@@ -7,88 +7,87 @@ import { useProfile } from '../../context/ProfileProvider';
 
 export default function AccountPage_index() {
     const { session } = useContext(SessionContext);
-
+    const { profile, setProfile, avatarImgUrl, setAvatarImgUrl } = useProfile();
     const [loading, setLoading] = useState(true);
     const [username, setUsername] = useState(null);
-    const [avatar_url, setAvatarUrl] = useState(null);
+    // const [avatar_url, setAvatarUrl] = useState(null);
     const [first_name, setFirstName] = useState(null);
     const [last_name, setLastName] = useState(null);
     const [phone, setPhone] = useState(null);
-    const { setAvatarImgUrl, setProfile } = useProfile();// stato per aggiornare l'url dell'avatar
 
-    useEffect(() => {
-        let ignore = false;
-        const getProfile = async () => {
-            if (!session) return;
+    // useEffect(() => {
+    //     let ignore = false;
+    //     const getProfile = async () => {
+    //         if (!session) return;
 
-            setLoading(true)
-            const { user } = session;
+    //         setLoading(true)
+    //         const { user } = session;
 
-            const { data, error } = await supabase
-                .from('profiles')
-                .select(`username, first_name, last_name, phone, avatar_url`)
-                .eq('id', user.id)
-                .single();
-            if (!ignore) {
-                if (error) {
-                    console.log(error);
-                } else {
-                    setUsername(data.username);
-                    setAvatarUrl(data.avatar_url);
-                    setFirstName(data.first_name);
-                    setLastName(data.last_name);
-                    setPhone(data.phone);
-                }
-            }
-            setLoading(false)
-        }
-        getProfile();
+    //         const { data, error } = await supabase
+    //             .from('profiles')
+    //             .select(`username, first_name, last_name, phone, avatar_url`)
+    //             .eq('id', user.id)
+    //             .single();
+    //         if (!ignore) {
+    //             if (error) {
+    //                 console.log(error);
+    //             } else {
+    //                 setUsername(data.username);
+    //                 setAvatarUrl(data.avatar_url);
+    //                 setFirstName(data.first_name);
+    //                 setLastName(data.last_name);
+    //                 setPhone(data.phone);
+    //             }
+    //         }
+    //         setLoading(false)
+    //     }
+    //     getProfile();
 
-        return () => {
-            ignore = true
-        }
-    }, [session])
+    //     return () => {
+    //         ignore = true
+    //     }
+    // }, [session])
 
     //poi passare come parametro anche avtarUrl
-    const updateProfile = async (event, avatarUrl) => {
+
+    useEffect(() => {
+        if (profile) {
+            setUsername(profile.username || '');
+            setFirstName(profile.first_name || '');
+            setLastName(profile.last_name || '');
+            setPhone(profile.phone || '');
+            setLoading(false);
+        }
+    }, [profile]);
+
+    const updateProfile = async (event) => {
         event.preventDefault();
-
         setLoading(true);
-        const { user } = session;
 
+        const { user } = session;
         const updates = {
             id: user.id,
             username,
             first_name,
             last_name,
             phone,
-            avatar_url: avatarUrl,
             updated_at: new Date(),
         };
+
         const { error } = await supabase.from('profiles').upsert(updates);
         if (error) {
             alert(error.message);
         }
         else {
-            setAvatarUrl(avatarUrl);
-            //aggirna il profilo dopo aver aggiornato l'avatar
             setProfile((prev) => ({
                 ...prev,
-                username,
-                first_name,
-                last_name,
-                phone,
-                avatar_url: avatarUrl,
-                updated_at: new Date()
+                ...updates,
             }));
         }
         setLoading(false);
     }
 
     const updateAvatarOnly = async (url) => {
-        setAvatarUrl(url); // aggiorna lo stato locale
-        setAvatarImgUrl(null); //reset temporaneo
-
         const { user } = session;// estrai i dati dell'utente loggato
 
         const { error } = await supabase
@@ -108,6 +107,10 @@ export default function AccountPage_index() {
             if (!imageError && data) {
                 const objectUrl = URL.createObjectURL(data);
                 setAvatarImgUrl(objectUrl);
+                setProfile((prev) => ({
+                    ...prev,
+                    avatar_url: url,
+                }));
             }
         }
     };
@@ -122,19 +125,18 @@ export default function AccountPage_index() {
                         onSubmit={updateProfile}
                         className="p-10 rounded-xl shadow-md bg-blue-50">
                         <Avatar
-                            url={avatar_url}
+                            url={profile?.avatar_url}
                             size={150}
                             onUpload={async (_event, url) => {
                                 await updateAvatarOnly(url);
                             }}
-
                         />
                         {/* Username e telefono */}
                         <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
                             <div>
                                 <InputFormUpdate
                                     onChangeFunction={setUsername}
-                                    valor={username || ""}
+                                    valor={username}
                                     label="Username"
                                     type="text"
                                     id="username" />
@@ -143,7 +145,7 @@ export default function AccountPage_index() {
                             <div>
                                 <InputFormUpdate
                                     onChangeFunction={setPhone}
-                                    valor={phone || ""}
+                                    valor={phone}
                                     label="Telefono"
                                     type="text"
                                     id="phone" />
@@ -155,7 +157,7 @@ export default function AccountPage_index() {
                             <div>
                                 <InputFormUpdate
                                     onChangeFunction={setFirstName}
-                                    valor={first_name || ""}
+                                    valor={first_name}
                                     label="Nome"
                                     type="text"
                                     id="first_name" />
@@ -163,7 +165,7 @@ export default function AccountPage_index() {
                             <div>
                                 <InputFormUpdate
                                     onChangeFunction={setLastName}
-                                    valor={last_name || ""}
+                                    valor={last_name}
                                     label="Cognome"
                                     type="text"
                                     id="last_name" />

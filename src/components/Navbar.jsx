@@ -28,45 +28,45 @@ export default function Navbar() {
 
           {/* Desktop Menu */}
           {session ? (
-            <div className="hidden md:flex space-x-1">
-              {/* <p href="#" className="text-blue-600 font-bold text-lg hover:text-blue-600">Ciao {session.user.user_metadata.username}</p> */}
-              <span className="flex items-center">
-                {avatarImgUrl && (
-                  <img
+            <div className="hidden md:flex space-x-1 items-center">
+              {avatarImgUrl && (
+                <img
                   src={avatarImgUrl}
                   alt="Avatar"
                   className=" w-8 h-8 rounded-full object-cover"
-                  />
-                )}
-              </span>
+                />
+              )}
               <NavbarDropdown
                 label={`Ciao ${profile?.username}`}
                 items={[
                   { label: "Il mio profilo", href: "/account" },
                 ]}
-              >
-              </NavbarDropdown>
+              />
             </div>
           ) : (
-            // se non sei sutenticato
+            // se non sei autenticato
             <div className="hidden md:flex space-x-4">
-              <Link to={"/register"}>
-                <p href="#" className="text-blue-600 font-bold text-lg hover:text-blue-600">Registrati</p>
+              <Link to={"/register"} className="text-blue-600 font-bold text-lg hover:text-blue-600">
+                Registrati
               </Link>
-              <Link to={"/login"}>
-                <p href="#" className="text-blue-600 font-bold text-lg hover:text-blue-600">Login</p>
+              <Link to={"/login"} className="text-blue-600 font-bold text-lg hover:text-blue-600">
+                Login
               </Link>
             </div>
-          )
-          }
+          )}
 
           {/* Mobile Button */}
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
+              aria-label={isOpen ? "Chiudi menu" : "Apri menu"}
               className="text-blue-600 font-bold focus:outline-none m-2"
             >
-              {isOpen ? <X strokeWidth={2.25} className="w-12 h-8" /> : <Menu strokeWidth={2.25} className="w-12 h-8" />}
+              {isOpen ? (
+                <X strokeWidth={2.25} className="w-12 h-8" />
+              ) : (
+                <Menu strokeWidth={2.25} className="w-12 h-8" />
+              )}
             </button>
           </div>
         </div>
@@ -75,9 +75,24 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-white shadow-md px-4 py-2 space-y-2">
-          <a href="#" className="block text-blue-600 hover:text-blue-600">Home</a>
-          <a href="#" className="block text-blue-600 hover:text-blue-600">About</a>
-          <a href="#" className="block text-blue-600 hover:text-blue-600">Contact</a>
+          {!session && (
+            <>
+              <Link
+                to="/register"
+                onClick={() => setIsOpen(false)}
+                className="block text-blue-600 hover:text-blue-800"
+              >
+                Registrati
+              </Link>
+              <Link
+                to="/login"
+                onClick={() => setIsOpen(false)}
+                className="block text-blue-600 hover:text-blue-800"
+              >
+                Login
+              </Link>
+            </>
+          )}
         </div>
       )}
     </nav>

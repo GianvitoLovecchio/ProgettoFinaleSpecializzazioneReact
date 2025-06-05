@@ -3,10 +3,14 @@ import { ChevronDown } from "lucide-react";
 import { Link } from "react-router";
 import supabase from "../supabase/supabase-client";
 import { useNavigate } from "react-router";
+import { useProfile } from "../context/ProfileProvider";
 
 export default function NavbarDropdown({ label = "Menu", items = [] }) {
     const [open, setOpen] = useState(false);
     const menuRef = useRef();
+    const navigate = useNavigate();
+    const {setProfile,  setAvatarImgUrl } = useProfile();
+
 
     
   const signOut = async () => {
@@ -14,6 +18,8 @@ export default function NavbarDropdown({ label = "Menu", items = [] }) {
     if (error) console.log(error);
     alert("Logout effettuato con successo");
     navigate("/");
+    setProfile(null);
+    setAvatarImgUrl(null);
   }
 
     // Chiude il menu cliccando fuori

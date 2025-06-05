@@ -1,25 +1,19 @@
 import { useState } from "react";
-import {
-    ConfirmSchema,
-    getErrors,
-    getFieldError,
-} from "../../lib/validationForm";
+import { ConfirmSchema, getErrors, getFieldError } from "../../lib/validationForm";
 import InputFormRegistration from "../../components/InputFormRegistration";
 import PasswordForm from "../../components/PasswordForm";
 import supabase from "../../supabase/supabase-client";
 import { useNavigate } from "react-router";
+import noImage from "../../img/no_img_profile.png";
+// import Avatar from "../../components/Avatar";
 
 
 export default function RegistrationForm() {
     const navigate = useNavigate();
-    //vengono dichiarati e inizializzati gli stati
     //utilizzato per capire se il form è stato inviato almeno una volta
     const [fromSubmitted, setFormSubmitted] = useState(false);
-    //oggetto con gli errori per ogni campo
-    const [formErrors, setFormErrors] = useState({});
-    //tiene conto dei campi che sono stati toccati
-    const [touchFields, setTouchFields] = useState({});
-    //constiene i valori inseriti nei campi
+
+    // Stato unico per la form con valori e errori
     const [formState, setFormState] = useState({
         email: "",
         phone: "",
@@ -27,17 +21,26 @@ export default function RegistrationForm() {
         lastName: "",
         username: "",
         password: "",
+        avatar_url: "",
     });
+
+    // Stato per errori (singolo oggetto)
+    const [formErrors, setFormErrors] = useState({});
+
+    // Stato per campi toccati (per validazione onBlur)
+    const [touchedFields, setTouchedFields] = useState({});
+
+    // Stato per mostrare/nascondere password
     const [showPassword, setShowPassword] = useState(false);
+
+    // Preview immagine avatar
+    const [previewUrl, setPreviewUrl] = useState(null);
 
     //funzione che parte al click del bottone di invio, 
     const onSubmit = async (event) => {
         event.preventDefault();
-        //setta il formSubmitted a true, indicando che è stato inviato
-        setFormSubmitted(true);
         //effettua la validazione
         const { error, data } = ConfirmSchema.safeParse(formState);
-
 
         //se ci sono errori, setta l'oggetto con gli errori
         if (error) {
@@ -45,69 +48,121 @@ export default function RegistrationForm() {
             const errors = getErrors(error);
             //setta l'oggetto con gli errori risultanti dalla funzione appena richiamata
             setFormErrors(errors);
+            // Metto tutti i campi come toccati per mostrare errori
+            const allTouched = Object.keys(formState).reduce((acc, key) => {
+                acc[key] = true;
+                return acc;
+            }, {});
+            setTouchedFields(allTouched);
+            return;
+        }
+        //se non ci sono errori, effettua la registrazione dell'utente utilizzando nmail e password come dati
+        let { error: signUpError } = await supabase.auth.signUp({
+            email: data.email,
+            password: data.password,
+            //in più aggiunge gli altri dati relativi all'utente
+            options: {
+                data: {
+                    first_name: data.firstName,
+                    last_name: data.lastName,
+                    username: data.username,
+                    phone: data.phone,
+                    avatar_url: formState.avatar_url || noImage,
+                },
+            },
+        });
+
+        //se ci sono errori, mostra un messaggio di errore
+        if (signUpError) {
+            alert("La registrazione non è andata a buon fine");
+            return;
+            //altrimenti mostra un messaggio di successo e reindirizza alla home dopo 2 secondi
         } else {
-            //se non ci sono errori, effettua la registrazione dell'utente utilizzando nmail e password come dati
-            let { error } = await supabase.auth.signUp({
-                email: data.email,
-                password: data.password,
-                //in più aggiunge gli altri dati relativi all'utente
-                options: {
-                    data: {
-                        first_name: data.firstName,
-                        last_name: data.lastName,
-                        username: data.username,
-                        phone: data.phone,
-                    }
-                }
-            });
-            //se ci sono errori, mostra un messaggio di errore
-            if (error) {
-                alert("La registrazione non è andata a buon fine");
-                //altrimenti mostra un messaggio di successo e reindirizza alla home dopo 2 secondi
-            } else {
-                alert("La resistrazione è stata effettuata con successo! Verrai reindirizzato alla homepage.");
-                await new Promise((resolve) => setTimeout(resolve, 1000));
-                navigate("/");
-            }
+            alert("La resistrazione è stata effettuata con successo! Verrai reindirizzato alla homepage.");
+            setTimeout(() => navigate("/"), 1000);
         }
     }
 
     //valida un determinato campo non appena viene popolato ed abbandonato dall'utente
     //riceve il campo in ingresso, property
-    const onBlur = (property) => () => {
+    const onBlur = (field) => () => {
         //viene richiamata la funzione per ottenere gli errori
-        const message = getFieldError(property, formState[property]);
+        const errorMessage = getFieldError(field, formState[field]);
         //se ci sono errori, setta l'oggetto con gli errori
-        setFormErrors((prev) => ({ ...prev, [property]: message }));
+        setFormErrors((prev) => ({ ...prev, [field]: errorMessage }));
         //setta il campo come toccato
-        setTouchFields((prev) => ({ ...prev, [property]: true }));
+        setTouchedFields((prev) => ({ ...prev, [field]: true }));
     }
 
     //determina se un campo è da considerare non valido o meno, per mostrare gli errori visivamente
-    const isInvalid = (property) => {
+    const isInvalid = (field) => {
         //se il campo non è stato toccato, restituisce undefined
-        if (fromSubmitted || touchFields[property]) {
+        if (fromSubmitted || touchedFields[field]) {
             //se il campo ha un errore, restituisce true
-            return !!formErrors[property];
+            return !!formErrors[field];
         }
         return undefined;
     }
 
     //funzione per impostare il valore di un determinato campo
     //riceve il campo in ingresso, property ed un'opzionale funzione per ottenere il valore tramite una specifica estrazione
-    const setField = (property, valueSelector) => (e) => {
-        //setta il campo
+    // const setField = (property, valueSelector) => (e) => {
+    //     //setta il campo
+    //     setFormState((prev) => ({
+    //         //viene copiato l'oggetto precedente e viene aggiunto il nuovo valore
+    //         ...prev,
+    //         //il nuovo valore viene assegnato al campo
+    //         [property]: valueSelector ? valueSelector(e) : (e.target.value)
+    //     }));
+    // }
+    const setField = (field) => (e) => {
+        const value = e.target.value;
+        setFormState((prev) => ({ ...prev, [field]: value }));
+    };
+
+    //funzione per il caricamento dell'immagine
+    const handleAvatarUpload = async (e) => {
+        // viene preso il file caricato
+        const file = e.target.files[0];
+
+        // se il file non esiste, esce
+        if (!file) return;
+
+        const preview = URL.createObjectURL(file);
+        setPreviewUrl(preview);
+
+        //genera un nome univoco per il file, 
+        const fileExt = file.name.split('.').pop();// prende l'estensione del file
+        const fileName = `${formState.username || Date.now()}.${fileExt}`;// se è presente uno usern name da quel nome, altrimenti data e ora attuali
+        const filePath = `public/${fileName}`;// salva in public il file
+
+        //carica il file in supabase Storage, se trova errori li salva in uploadError
+        const { error: uploadError } = await supabase.storage
+            .from('avatars') // usa il nome del tuo bucket
+            .upload(filePath, file);
+
+        //se c'è errore, lo stampa
+        if (uploadError) {
+            alert("Errore durante il caricamento dell'immagine", uploadError.message);
+            return;
+        }
+
+        //ottiene l'url pubblico del file
+        const { data } = supabase.storage
+            .from('avatars')
+            .getPublicUrl(filePath);
+
+        //salva l'url pubblico nel formState
         setFormState((prev) => ({
-            //viene copiato l'oggetto precedente e viene aggiunto il nuovo valore
             ...prev,
-            //il nuovo valore viene assegnato al campo
-            [property]: valueSelector ? valueSelector(e) : (e.target.value)
+            avatar_url: data.publicUrl, // URL pubblico da salvare nel profilo
         }));
-    }
+    };
+
 
     return (
         <>
-            <h1 className="text-3xl text-blue-600 font-semibold mb-5">Form di login</h1>
+            <h1 className="text-3xl text-blue-600 font-semibold mb-5">Registrazione</h1>
             <div className="flex items-center justify-center p-4 ">
                 <div className="w-full max-w-4/5 ">
                     <form
@@ -167,30 +222,65 @@ export default function RegistrationForm() {
                         </div>
 
                         {/* Username */}
-                        <div className="mb-4">
-                            <InputFormRegistration
-                                onChangeFunction={setField("username")}
-                                onBlurFunction={onBlur("username")}
-                                ariaInvalidFunction={isInvalid("username")}
-                                value={formState.username}
-                                label="Username"
-                                type="text"
-                                formErrors={formErrors}
-                                id="username" />
+                        <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+                            <div >
+                                <InputFormRegistration
+                                    onChangeFunction={setField("username")}
+                                    onBlurFunction={onBlur("username")}
+                                    ariaInvalidFunction={isInvalid("username")}
+                                    value={formState.username}
+                                    label="Username"
+                                    type="text"
+                                    formErrors={formErrors}
+                                    id="username" />
+                            </div>
+
+                            {/* Password */}
+                            <div >
+                                <PasswordForm
+                                    onChangeFunction={setField("password")}
+                                    onBlurFunction={onBlur("password")}
+                                    ariaInvalidFunction={isInvalid("password")}
+                                    label="Password"
+                                    value={formState.password}
+                                    formErrors={formErrors}
+                                    id="password"
+                                    showPassword={showPassword}
+                                    setShowPassword={setShowPassword} />
+                            </div>
                         </div>
 
-                        {/* Password */}
-                        <div className="mb-6">
-                            <PasswordForm
-                                onChangeFunction={setField("password")}
-                                onBlurFunction={onBlur("password")}
-                                ariaInvalidFunction={isInvalid("password")}
-                                label="Password"
-                                value={formState.password}
-                                formErrors={formErrors}
-                                id="password"
-                                showPassword={showPassword}
-                                setShowPassword={setShowPassword} />
+                        {/* Avatar upload */}
+                        <label className="block text-gray-700 font-semibold mb-1">
+                            Immagine di profilo
+                        </label>
+                        <div className="mb-4 border border-gray-300 rounded-md py-2 ">
+                            <div className="flex justify-evenly">
+                                <input
+                                    type="file"
+                                    id="single"
+                                    accept="image/"
+                                    onChange={handleAvatarUpload}
+                                    className="hidden px-3 py-1 focus:outline-none "
+                                />
+                                {/* anteprima immagine caricata */}
+                                {console.log(formState.avatar_url)}
+                                {previewUrl && (
+                                    <div className="mt-2">
+                                        <img
+                                            src={previewUrl}
+                                            alt="Preview"
+                                            className="w-24 h-24 rounded-full object-cover "
+                                        />
+                                    </div>
+                                )}
+                                <label
+                                    htmlFor="single"
+                                    className="my-auto pl-3 py-1 w-32 cursor-pointer items-center text-sm bg-red-800 border border-red-800 rounded-lg text-white hover:scale-105 transition duration-500 hover:bg-blue-50 hover:text-black transition disabled:opacity-50">
+                                    {/* {uploading ? "Uploading ..." : "Modifica"} */}Carica immagine
+                                </label>
+
+                            </div>
                         </div>
 
                         {/* Submit Button */}
@@ -201,8 +291,8 @@ export default function RegistrationForm() {
                             Registrati
                         </button>
                     </form>
-                </div>
-            </div>
+                </div >
+            </div >
         </>
     );
 }
