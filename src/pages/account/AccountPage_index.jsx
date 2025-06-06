@@ -15,38 +15,6 @@ export default function AccountPage_index() {
     const [last_name, setLastName] = useState(null);
     const [phone, setPhone] = useState(null);
 
-    // useEffect(() => {
-    //     let ignore = false;
-    //     const getProfile = async () => {
-    //         if (!session) return;
-
-    //         setLoading(true)
-    //         const { user } = session;
-
-    //         const { data, error } = await supabase
-    //             .from('profiles')
-    //             .select(`username, first_name, last_name, phone, avatar_url`)
-    //             .eq('id', user.id)
-    //             .single();
-    //         if (!ignore) {
-    //             if (error) {
-    //                 console.log(error);
-    //             } else {
-    //                 setUsername(data.username);
-    //                 setAvatarUrl(data.avatar_url);
-    //                 setFirstName(data.first_name);
-    //                 setLastName(data.last_name);
-    //                 setPhone(data.phone);
-    //             }
-    //         }
-    //         setLoading(false)
-    //     }
-    //     getProfile();
-
-    //     return () => {
-    //         ignore = true
-    //     }
-    // }, [session])
 
     //poi passare come parametro anche avtarUrl
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import useFetch from "../hooks/useFetch";
-import { ChevronsDown } from "lucide-react";
+import { ChevronsDown, Gamepad2 } from "lucide-react";
 import { Link } from "react-router";
 
 export default function GenresDropdown() {
@@ -8,8 +8,9 @@ export default function GenresDropdown() {
 
     return (
         <>
-            <details className="p-1 rounded group">
+            <details className="rounded group">
                 <summary className="flex list-none cursor-pointer text-blue-600 font-bold text-2xl">
+                    <Gamepad2 strokeWidth={2} className="flex my-auto mx-2" />
                     Generi
                     <span>
                         <ChevronsDown size={22} strokeWidth={3} className="text-red-700 mt-1.5 ml-2 transition duration-500 group-open:rotate-180" />

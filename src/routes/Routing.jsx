@@ -6,6 +6,7 @@ import Register_index from '../pages/register/Register_index';
 import Login_index from '../pages/login/Login_index';
 import Error_page from '../pages/error/Error_page'; 
 import AccountPage_index from '../pages/account/AccountPage_index';
+import FavoritesPage_index from '../pages/favorites/FavoritesPage_index';
 import Layout from '../layout/Layout';
 import { BrowserRouter, Routes, Route } from 'react-router';
 
@@ -22,6 +23,7 @@ export default function Routing() {
                     <Route path="/register" element={<Register_index />}></Route>
                     <Route path="/login" element={<Login_index />}></Route>
                     <Route path="/account" element={<AccountPage_index />}/>
+                    <Route path="/favorites" element={<FavoritesPage_index />}/>
                 </Route>
             </Routes>
         </BrowserRouter>
