@@ -75,7 +75,7 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-white shadow-md px-4 py-2 space-y-2">
-          {!session && (
+          {!session ? (
             <>
               <Link
                 to="/register"
@@ -92,9 +92,21 @@ export default function Navbar() {
                 Login
               </Link>
             </>
+          ) : (
+            <>
+              <span className="block text-blue-600 font-bold">Ciao {profile?.username}</span>
+              <Link
+                to="/account"
+                onClick={() => setIsOpen(false)}
+                className="block text-blue-600 hover:text-blue-800"
+              >
+                Il mio profilo
+              </Link>
+            </>
           )}
         </div>
       )}
+
     </nav>
   );
 }

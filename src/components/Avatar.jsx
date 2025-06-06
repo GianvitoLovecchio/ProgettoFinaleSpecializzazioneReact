@@ -59,7 +59,7 @@ export default function Avatar({ url, size, onUpload }) {
     };
 
     return (
-        <div className="mb-6 flex justify-evenly">
+        <div className="mb-6 flex flex-col items-center mb-8">
             {avatarImgUrl ? (
                 <img
                     src={avatarImgUrl}
@@ -79,14 +79,14 @@ export default function Avatar({ url, size, onUpload }) {
                 <input
                     type="file"
                     id="single"
-                    accept="image/"
+                    accept="image/*"
                     onChange={uploadAvatar}
                     disabled={uploading}
                     className="hidden"
                 />
                 <label
                     htmlFor="single"
-                    className="flex items-center pl-3 py-1 w-20 cursor-pointer items-center text-sm bg-red-800 border border-red-800 rounded-lg text-white mt-4 hover:scale-105 transition duration-500 hover:bg-blue-50 hover:text-black transition disabled:opacity-50"
+                    className="cursor-pointer flex items-center pl-3 py-1 w-20  items-center text-sm bg-red-800 border border-red-800 rounded-lg text-white mt-4 md:hover:scale-105 transition duration-500 md:hover:bg-blue-50 md:hover:text-black transition disabled:opacity-50"
                 >{uploading ? "Uploading ..." : "Modifica"}
                 </label>
             </div>

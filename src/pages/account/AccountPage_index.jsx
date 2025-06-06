@@ -87,8 +87,8 @@ export default function AccountPage_index() {
     return session ? (
         <>
             <h1 className="text-3xl text-blue-600 font-semibold mb-5">Aggiorna i tuoi dati</h1>
-            <div className="flex items-center justify-center p-4 ">
-                <div className="w-full max-w-4/5 ">
+            <div className="flex items-center justify-center md:p-4 ">
+                <div className="w-full md:max-w-4/5 ">
                     <form
                         onSubmit={updateProfile}
                         className="p-10 rounded-xl shadow-md bg-blue-50">
