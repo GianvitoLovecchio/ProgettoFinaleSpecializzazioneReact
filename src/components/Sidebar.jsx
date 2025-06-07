@@ -82,7 +82,7 @@ export default function Sidebar() {
         className="md:hidden fixed top-[64px] left-0 h-[calc(100vh-64px)] z-40 transition-all duration-500"
         style={{ width: isOpen ? '55%' : '60px', backgroundColor: isOpen? 'rgba(219,234,254,0.9' : 'rgba(0, 0, 0, 0)' }}
       >
-        <div className="bg-transparent shadow-lg h-full shadow-xl relative overflow-y-auto no-scrollbar transition-all duration-500">
+        <div className={`bg-transparent shadow-lg h-full shadow-xl relative overflow-y-auto no-scrollbar transition-all duration-500 ${!isOpen ? 'mt-4' : ''}`}>
           {/* Toggle Button */}
           {/* Toggle Button (allineato in colonna) */}
           <button

@@ -11,7 +11,7 @@ export default function HomePage_index() {
     return (
         <>
             {!loading ? (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mx-8 md:mx-2 y-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mx-4 md:mx-2 y-8">
                     {data?.results.map((game) => (
                         <CardGame key={game.id} game={game} />
                     ))}

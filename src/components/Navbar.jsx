@@ -6,12 +6,28 @@ import SearchBar from "./SearchBar";
 import { useProfile } from "../context/ProfileProvider";
 import SessionContext from "../context/SessionContext";
 import NavbarDropdown from "./NavbarDropdown";
+import supabase from "../supabase/supabase-client";
+import { set } from "zod/v4";
+
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const { session } = useContext(SessionContext);
   const { profile, avatarImgUrl } = useProfile();
+  const {setProfile,  setAvatarImgUrl } = useProfile();
+
+
+    
+  const signOut = async () => {
+    const { error } = await supabase.auth.signOut();
+
+    alert("Logout effettuato con successo");
+    setProfile(null);
+    setAvatarImgUrl(null)
+    isOpen && setIsOpen(false)
+    navigate("/");
+  }
 
   return (
     <nav className="sticky top-0 left-0 bg-blue-100 w-full z-50">
@@ -74,34 +90,35 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-white shadow-md px-4 py-2 space-y-2">
+        <div className="md:hidden bg-blue-100 shadow-lg px-4 py-2 space-y-2">
           {!session ? (
             <>
               <Link
                 to="/register"
                 onClick={() => setIsOpen(false)}
-                className="block text-blue-600 hover:text-blue-800"
+                className="block text-blue-600"
               >
                 Registrati
               </Link>
               <Link
                 to="/login"
                 onClick={() => setIsOpen(false)}
-                className="block text-blue-600 hover:text-blue-800"
+                className="block text-blue-600"
               >
                 Login
               </Link>
             </>
           ) : (
             <>
-              <span className="block text-blue-600 font-bold">Ciao {profile?.username}</span>
+              <span className="block text-blue-600 font-semibold">Ciao {profile?.username}</span>
               <Link
                 to="/account"
                 onClick={() => setIsOpen(false)}
-                className="block text-blue-600 hover:text-blue-800"
+                className="block text-blue-600 text-lg"
               >
                 Il mio profilo
               </Link>
+              <button onClick={signOut} href="#" className="block font-bold text-lg text-red-600">Logout</button>
             </>
           )}
         </div>
