@@ -82,35 +82,35 @@ export default function Sidebar() {
         className="md:hidden fixed top-[64px] left-0 h-[calc(100vh-64px)] z-40 transition-all duration-500"
         style={{ width: isOpen ? '55%' : '60px', backgroundColor: isOpen? 'rgba(219,234,254,0.9' : 'rgba(0, 0, 0, 0)' }}
       >
-        <div className={`bg-transparent shadow-lg h-full shadow-xl relative overflow-y-auto no-scrollbar transition-all duration-500 ${!isOpen ? 'mt-4' : ''}`}>
-          {/* Toggle Button */}
-          {/* Toggle Button (allineato in colonna) */}
+        <div className={`bg-transparent shadow-lg h-full shadow-xl relative overflow-y-auto no-scrollbar transition-all duration-500 `}>
+          {/* bottone apertura/chiusura sidebar */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className={` items-center text-blue-600 ${isOpen ? 'block ml-auto mr-4 mt-2' : 'flex'}`}
+            className={` items-center text-blue-600 'block ml-auto mr-4 mt-2'`}
           >
             <ChevronsRight
               className={`ml-2 transition-transform duration-1000 ${isOpen ? 'rotate-180' : ''}`}
-              size={isOpen ? 40 : 30}
+              size={40}
               strokeWidth={2.5}
             />
           </button>
 
 
-          <nav className={`flex flex-col items-start p-2 transition-all duration-300`}>
-            {/* Preferiti */}
+          <nav className={`flex flex-col items-start px-1.5 transition-all duration-300`}>
+            {/* botone Preferiti */}
             <button
               onClick={() => {
                 if (isOpen) handleNavigate("/favorites");
                 else setIsOpen(true);
               }}
-              className="flex items-center h-12 my-3 text-blue-600"
+              className="flex items-center h-12 my-1 text-blue-600"
             >
-              <Heart size={32} strokeWidth={2.5} className={`my-auto ${isOpen ? 'mx-2' : ''}`}/>
+              <Heart size={32} strokeWidth={2.5} className={`my-auto mx-2`}/>
               {isOpen && <span className="ml-1 text-blue-600 font-bold text-xl">Preferiti ({lunghezza})</span>}
             </button>
 
-            {/* Dropdown animato */}
+            {/* sezione generi */}
+            {/* aperto */}
             {isOpen && (
               <details
                 className="group rounded w-full"
@@ -149,7 +149,7 @@ export default function Sidebar() {
             {!isOpen && (
               <button
                 onClick={() => setIsOpen(true)}
-                className="flex items-center text-blue-600 my-3"
+                className="flex items-center text-blue-600 mx-2 text-xl"
               >
                 <Gamepad2 size={32} strokeWidth={2.5} />
               </button>

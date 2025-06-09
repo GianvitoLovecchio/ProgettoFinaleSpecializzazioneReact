@@ -5,13 +5,16 @@ import SessionContext from "../../context/SessionContext";
 import LazyLoadGameImage from "../../components/LazyLoadGameImage";
 import ToggleFavorite from "../../components/ToggleFavorite";
 import Loader from "../../components/Loader";
+import { Link } from "react-router";
+import platformLogos from "../../components/PlatformsArray";
 
 export default function GamePage_index() {
     const { session } = useContext(SessionContext)
     const { slug, id } = useParams()
-    const { data, error, load } = useFetch(
+    const { data: data } = useFetch(
         `https://api.rawg.io/api/games/${id}?key=25026496f67e4b888b43a18359248003`
     )
+
     const [showMore, setShowMore] = useState(false)
 
     if (!data) {
@@ -29,6 +32,7 @@ export default function GamePage_index() {
 
     return (
         <div className="max-w-5xl mx-auto bg-blue-50 rounded-xl shadow-lg p-4 sm:p-6 md:p-8 mt-4 md:mt-8">
+            {/* {console.log(data_platforms)} */}
             <div className="flex flex-row justify-between sm:items-center gap-2">
                 <h1 className="text-xl sm:text-2xl font-bold text-blue-900">{data.name}</h1>
                 {session && <ToggleFavorite data={data} size={35} />}
@@ -42,13 +46,14 @@ export default function GamePage_index() {
             </div>
 
             <div className="flex flex-wrap gap-2 my-4">
-                {data.genres.map((genre) => (
-                    <span
-                        key={genre.id}
-                        className="text-[10px] sm:text-xs font-semibold border border-red-700 bg-red-700 text-white py-1 px-3 rounded-full"
-                    >
-                        {genre.name}
-                    </span>
+                {data.genres.map((genre, index) => (
+                    <Link to={`/games/${genre.slug}`} key={index}>
+                        <span
+                            className="text-[10px] sm:text-xs font-semibold border border-red-700 bg-red-700 text-white py-1 px-3 rounded-full"
+                        >
+                            {genre.name}
+                        </span>
+                    </Link>
                 ))}
             </div>
 
@@ -79,9 +84,27 @@ export default function GamePage_index() {
                 </div>
                 <div>
                     <p className="font-semibold text-lg">Piattaforme:</p>
-                    <p>
-                        {data.platforms?.map((p) => p.platform.name).join(", ") || "N/A"}
-                    </p>
+
+                    {/* {console.log(data.platforms)} */}
+                    <div className="flex gap-2 my-2">
+                        {data.platforms?.map((p, index) => {
+                            const match = platformLogos.find(
+                                (platform) => platform.key === p.platform.slug
+                            );
+                            return match?.image ? (
+                                <Link to={`/platform/${match.id}`}>
+                                <img
+                                        key={index}
+                                        className="w-10 h-10 p-1 rounded-full bg-white border border-blue-500"
+                                        src={match.image}
+                                        alt={match.name}
+                                        title={match.name}
+                                    />
+                                 </Link>
+                            ) : null;
+                        })}
+
+                    </div>
                 </div>
                 <div>
                     <p className="font-semibold text-lg">Rating:</p>

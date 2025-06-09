@@ -51,11 +51,11 @@ export default function FavoritesProvider({ children }) {
       );
     }
   };
-
   useEffect(() => {
     if (session) {
-      getFavorites()
+      getFavorites();
     }
+
     const favorites = supabase
       .channel("favorites")
       .on(
@@ -66,12 +66,10 @@ export default function FavoritesProvider({ children }) {
       .subscribe();
 
     return () => {
-      if (favorites) {
-        supabase.removeChannel(favorites);
-      }
-      favorites.unsubscribe();
+      favorites.unsubscribe(); // ✅ corretto
     };
   }, [getFavorites, session]);
+
 
   return (
     <FavoritesContext.Provider
