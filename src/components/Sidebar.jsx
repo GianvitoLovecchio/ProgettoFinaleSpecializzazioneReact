@@ -24,7 +24,7 @@ export default function Sidebar() {
   return (
     <>
       {/* DESKTOP */}
-      <aside className="hidden md:block w-1/5 h-[calc(100vh-64px)] shadow-md overflow-y-auto sticky top-[64px] px-4 no-scrollbar">
+      <aside className="hidden md:block w-1/5 h-[calc(100vh-64px)] shadow-md overflow-y-auto sticky top-[64px] pl-2 pr-4 no-scrollbar">
         <nav className="flex flex-col py-4 gap-4">
           {/* bottone preferiti */}
           <Link to="/favorites" className="flex text-blue-600 font-bold my-1">
@@ -89,7 +89,7 @@ export default function Sidebar() {
           {/* bottone apertura/chiusura sidebar */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="items-center text-blue-600 block ml-auto mr-4 mt-2"
+            className="items-center text-red-600 block ml-auto mr-4 mt-2"
           >
             <ChevronsRight
               className={`ml-2 transition-transform duration-1000 ${isOpen ? 'rotate-180' : ''}`}

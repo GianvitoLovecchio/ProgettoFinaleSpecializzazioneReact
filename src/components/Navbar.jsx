@@ -33,10 +33,11 @@ export default function Navbar() {
     <nav className="sticky top-0 left-0 bg-blue-100 w-full z-50">
       <div className="pl-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
+
           {/* LOGO */}
           <Link to="/">
             <div className="flex-shrink-0 ">
-              <span className="text-4xl font-bold text-blue-600">react</span><span className="text-4xl font-extrabold text-red-600">GAME</span>
+              <span className="text-2xl md:text-4xl font-bold text-blue-600">react</span><span className="text-2xl md:text-4xl font-extrabold text-red-600">GAME</span>
             </div>
           </Link>
 
@@ -76,7 +77,7 @@ export default function Navbar() {
             <button
               onClick={() => setIsOpen(!isOpen)}
               aria-label={isOpen ? "Chiudi menu" : "Apri menu"}
-              className="text-blue-600 font-bold focus:outline-none m-2"
+              className="text-blue-600 font-bold focus:outline-none my-2"
             >
               {isOpen ? (
                 <X strokeWidth={2.25} className="w-12 h-8" />
@@ -118,6 +119,7 @@ export default function Navbar() {
               >
                 Il mio profilo
               </Link>
+              <SearchBar/>
               <button onClick={signOut} href="#" className="block font-bold text-lg text-red-600">Logout</button>
             </>
           )}

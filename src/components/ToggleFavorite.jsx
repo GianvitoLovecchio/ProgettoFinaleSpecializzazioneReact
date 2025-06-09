@@ -13,11 +13,11 @@ export default function ToggleFavorite({ data, size }) {
     return (
         <>
             {isFavorite ? (
-                <button className="text-red-600 cursor-pointer md:hover:scale-150 md:duration-400 md:hover:font-bold" onClick={() => removeFavorites(data.id)}>
+                <button className="text-red-600 cursor-pointer md:hover:scale-140 md:duration-400 md:hover:font-bold flex items-top" onClick={() => removeFavorites(data.id)}>
                     <HeartMinus strokeWidth={2} size={size} />
                 </button>
             ) : (
-                <button className="cursor-pointer md:hover:scale-150 md:duration-400 md:hover:font-bold" onClick={() => addFavorites(data)}>
+                <button className="cursor-pointer md:hover:scale-140 md:duration-400 md:hover:font-bold flex items-top" onClick={() => addFavorites(data)}>
                     < HeartPlus color="#2563eb" strokeWidth={2} size={size}/>
                 </button >
             )
