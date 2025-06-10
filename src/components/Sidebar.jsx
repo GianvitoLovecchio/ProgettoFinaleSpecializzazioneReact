@@ -47,8 +47,9 @@ export default function Sidebar() {
               {data?.results.map((genre) => (
                 <li
                   key={genre.id}
-                  className="ml-2 py-1 text-md font-semibold text-blue-600 hover:scale-103 hover:font-extrabold"
+                  className="flex ml-2 text-md font-semibold text-blue-600 hover:scale-103 hover:font-extrabold py-1"
                 >
+                  <img src={genre.image_background} alt="" className="rounded-full mx-2 h-7 w-7 " />
                   <Link to={`/games/${genre.slug}`}>{genre.name}</Link>
                 </li>
               ))}

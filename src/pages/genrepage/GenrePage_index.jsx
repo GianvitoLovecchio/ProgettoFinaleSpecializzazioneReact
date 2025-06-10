@@ -18,9 +18,11 @@ export default function GenrePage_index() {
 
     return (
         <>
-            <h1 className="text-3xl text-blue-600 font-semibold mb-5">Genere: <span className="font-normal px-0.5">{genre}</span> </h1>
+            <h1 className="text-3xl text-blue-600 font-semibold mb-1">Genere: <span className="font-normal px-0.5">{genre}</span> </h1>
+            <p className="text-md text-blue-600 font-norlmal mb-5">Giochi trovati: <span className="font-semibold">{data?.count}</span> </p>
             {loading && <Loader />}
-            {error && <p className="text-center m-5 text-lg text-blue-500">{error}</p>}
+            {console.log(genre)}
+            {error && <p className="text-center m-5 text-lg text-blue-600">{error}</p>}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mx-4 md:mx-2 y-8">
                 {data?.results.map((game) => (
                     <CardGame key={game.id} game={game} />

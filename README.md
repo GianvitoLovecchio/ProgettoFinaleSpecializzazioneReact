@@ -6,3 +6,4 @@ Librerie utilizzate:
 - supabase: per la gestione del db
 - zed: per la gestione della validazione dei dati nel form
 - react-spinners per i loader
+- dayjs per gestire le tempistiche dell'invio dei messagfgi nella chatbox

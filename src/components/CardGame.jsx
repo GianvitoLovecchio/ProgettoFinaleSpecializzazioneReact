@@ -21,7 +21,6 @@ export default function CardGame({ game, preferito }) {
 
     return (
         <>
-            {console.log(gameData)}
             <div className=" rounded-xl shadow-md bg-blue-50 grid  ">
                 <div className="flex items-top">
                     <LazyLoadGameImage image={gameData.background_image} />
@@ -30,8 +29,9 @@ export default function CardGame({ game, preferito }) {
                     <div className="flex justify-between">
                         <div className="flex flex-wrap h-5 items-top">
                             {gameData.genres.map((genre, index) => (
-                                <Link key={index} to={`/games/${genre.slug}`}>
+                                <Link key={index} to={`/games/${genre.name}`}>
                                     <p className="text-[11px] font-bold text-red-800 py-0.5 px-0.5 mx-1 md:hover:scale-105 md:hover:font-extrabold" key={genre.id}>{genre.name}</p>
+                                {console.log(genre.name)}
                                 </Link>
                             ))}
                         </div>
@@ -39,7 +39,7 @@ export default function CardGame({ game, preferito }) {
                             session && <ToggleFavorite data={gameData} size={22} />
                         }
                     </div>
-                    <h1 className="my-1 font-bold text-blue-800 text-lg">{gameData.name}</h1>
+                    <h1 className="my-1 font-bold text-blue-600 text-lg">{gameData.name}</h1>
 
                     <div>
                         <span className={`font-bold text-[10px] text-white rounded-lg px-1.5 items-center ${getRatingColor(gameData.rating)}`}>
