@@ -1,6 +1,7 @@
+import { readonly } from "zod/v4"
 
 
-export default function InputFormUpdate({ label, type, id, onChangeFunction, valor }) {
+export default function InputFormUpdate({ label, type, id, onChangeFunction, valor, noEdit }) {
     // const { session } = useContext(SessionContext);
     return (
         <>
@@ -14,6 +15,7 @@ export default function InputFormUpdate({ label, type, id, onChangeFunction, val
                 name={id}
                 value={valor}
                 onChange={(e)=> {onChangeFunction(e.target.value)}}
+                {...noEdit === true ? {readOnly: true} : {}}
             />
             {/* {
                 formErrors[id] ? (<small className="text-red-600">{formErrors[id]}</small>) : null

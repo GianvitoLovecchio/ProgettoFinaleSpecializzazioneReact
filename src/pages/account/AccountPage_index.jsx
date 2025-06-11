@@ -4,16 +4,20 @@ import SessionContext from '../../context/SessionContext';
 import InputFormUpdate from '../../components/InputFormUpdate';
 import Avatar from '../../components/Avatar';
 import { useProfile } from '../../context/ProfileProvider';
+import Message from '../../components/Message';
+import { UserPen } from 'lucide-react';
 
 export default function AccountPage_index() {
     const { session } = useContext(SessionContext);
     const { profile, setProfile, avatarImgUrl, setAvatarImgUrl } = useProfile();
     const [loading, setLoading] = useState(true);
     const [username, setUsername] = useState(null);
-    // const [avatar_url, setAvatarUrl] = useState(null);
     const [first_name, setFirstName] = useState(null);
     const [last_name, setLastName] = useState(null);
     const [phone, setPhone] = useState(null);
+    const [updatedProfile, setUpdatedProfile] = useState(null)
+    const [updatedAvatar, setUpdatedAvatar] = useState(null)
+    const [noEdit, setNoEdit] = useState(true);
 
 
     //poi passare come parametro anche avtarUrl
@@ -44,7 +48,7 @@ export default function AccountPage_index() {
 
         const { error } = await supabase.from('profiles').upsert(updates);
         if (error) {
-            alert(error.message);
+            setUpdatedProfile(false)
         }
         else {
             setProfile((prev) => ({
@@ -53,19 +57,27 @@ export default function AccountPage_index() {
             }));
         }
         setLoading(false);
+        setUpdatedProfile(true);
+        setNoEdit(true);
     }
 
     const updateAvatarOnly = async (url) => {
         const { user } = session;// estrai i dati dell'utente loggato
-
-        const { error } = await supabase
+        if (updatedAvatar !== null) {
+            setUpdatedAvatar(null);
+        }
+        if (updatedProfile !== null) {
+            setUpdatedProfile(null);
+        }
+        const { errorAvatar } = await supabase
             .from('profiles')
             .update({ avatar_url: url, updated_at: new Date() })// viene aggiornato il DB
             .eq('id', user.id);//garantise che le modifiche riguardino solo l'utente loggato
 
         // se rileva un errore lo stampa    
-        if (error) {
-            alert("Errore durante l'aggiornamento dell'avatar: " + error.message);
+        if (errorAvatar) {
+            setUpdatedAvatar(errorAvatar);
+            // alert("Errore durante l'aggiornamento dell'avatar: " + errorAvatar.message);
         } else {
             // altrimenti viene scaricata l'immagine da avatars
             const { data, error: imageError } = await supabase.storage
@@ -79,6 +91,7 @@ export default function AccountPage_index() {
                     ...prev,
                     avatar_url: url,
                 }));
+                setUpdatedAvatar(true);
             }
         }
     };
@@ -86,12 +99,36 @@ export default function AccountPage_index() {
 
     return session ? (
         <>
-            <h1 className="text-3xl text-blue-600 font-semibold mb-5">Aggiorna i tuoi dati</h1>
+            <h1 className="text-3xl text-blue-600 font-semibold mb-5">I tuoi dati</h1>
+            {/* messaggi di errore/successo */}
+            {updatedAvatar !== null &&
+                <Message
+                    message={{ updatedAvatar } ? "Avatar aggiornato con successo!" : "Aggiornamento avatar non riuscito, riprovare."}
+                    esito={updatedAvatar}
+                    setStatede={setUpdatedAvatar} />
+            }
+            {updatedProfile !== null &&
+                <Message message={{ updatedProfile } ? "Profilo aggiornato con successo!" : "Aggiornamento del  profilo non riuscito, riprovare."}
+                    esito={updatedProfile}
+                    setState={setUpdatedProfile} />
+            }
+            {/* form */}
             <div className="flex items-center justify-center md:p-4 ">
                 <div className="w-full md:max-w-4/5 ">
                     <form
                         onSubmit={updateProfile}
-                        className="p-10 rounded-xl shadow-md bg-blue-50">
+                        className="px-10 pb-10 pt-4 rounded-xl shadow-md bg-blue-50">
+                        {/* bottone di modifica */}
+                        {noEdit ?
+                        <div className="flex justify-end text-blue-600">
+                            <UserPen size={35} onClick={() => setNoEdit(false)} className='md:hover:scale-120 cursor-pointer md:duration-400'/>
+                        </div>
+                        :
+                        <div>
+                            <h1  className=' text-blue-600 text-2xl font-semibold'>Modifica i tuoi dati</h1>
+                        </div>
+                        }
+                        {/* avatar */}
                         <Avatar
                             url={profile?.avatar_url}
                             size={150}
@@ -107,7 +144,8 @@ export default function AccountPage_index() {
                                     valor={username}
                                     label="Username"
                                     type="text"
-                                    id="username" />
+                                    id="username"
+                                    noEdit={noEdit} />
                             </div>
 
                             <div>
@@ -116,7 +154,8 @@ export default function AccountPage_index() {
                                     valor={phone}
                                     label="Telefono"
                                     type="text"
-                                    id="phone" />
+                                    id="phone"
+                                    noEdit={noEdit} />
                             </div>
                         </div>
 
@@ -128,7 +167,8 @@ export default function AccountPage_index() {
                                     valor={first_name}
                                     label="Nome"
                                     type="text"
-                                    id="first_name" />
+                                    id="first_name"
+                                    noEdit={noEdit} />
                             </div>
                             <div>
                                 <InputFormUpdate
@@ -136,16 +176,19 @@ export default function AccountPage_index() {
                                     valor={last_name}
                                     label="Cognome"
                                     type="text"
-                                    id="last_name" />
+                                    id="last_name"
+                                    noEdit={noEdit} />
                             </div>
                         </div>
 
                         {/* Submit Button */}
-                        <button
-                            type="submit"
-                            className="bg-red-800 border border-red-800 rounded-lg text-white mt-4 hover:scale-105 transition duration-500 hover:bg-blue-50 hover:text-black cursor-pointer block ml-auto mt-8 px-4 py-1.5">
-                            Salva modifiche
-                        </button>
+                        {!noEdit ?
+                            <button
+                                type="submit"
+                                className="bg-red-800 border border-red-800 rounded-lg text-white mt-4 hover:scale-105 transition duration-500 hover:bg-blue-50 hover:text-black cursor-pointer block ml-auto mt-8 px-4 py-1.5">
+                                Salva modifiche
+                            </button> : null
+                        }
                     </form>
                 </div>
             </div>

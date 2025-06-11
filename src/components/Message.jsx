@@ -1,12 +1,13 @@
 import { X } from "lucide-react";
 import { useNavigate } from "react-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 
 
 export default function Message({ message, esito, redirect, redirectState, setState }) {
     const navigate = useNavigate();
     const [showMessage, setShowMessage] = useState(true);
+     const messageRef = useRef(null);
 
     useEffect(() => {
         if (redirectState) {
@@ -17,9 +18,16 @@ export default function Message({ message, esito, redirect, redirectState, setSt
         }
     }, [redirect, redirectState, navigate]);
 
+    // Funzione per essere reindirizzati visivamente ed automaticamente al messaggio di errore/successo
+    useEffect(() => {
+        if (showMessage && messageRef.current) {
+            messageRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+    }, [showMessage]);
+
     return (<>
         {showMessage &&
-            <div>
+            <div ref={messageRef}>
                 <h1
                     className={`flex px-2 justify-between mb-4 py-2 rounded-md text-center font-bold text-xl 
                     ${esito ?

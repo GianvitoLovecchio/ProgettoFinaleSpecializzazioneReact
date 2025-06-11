@@ -27,11 +27,10 @@ export default function CardGame({ game, preferito }) {
                 </div>
                 <div className="p-2">
                     <div className="flex justify-between">
-                        <div className="flex flex-wrap h-5 items-top">
+                        <div className="flex flex-wrap max-h-10 items-top">
                             {gameData.genres.map((genre, index) => (
                                 <Link key={index} to={`/games/${genre.name}`}>
                                     <p className="text-[11px] font-bold text-red-800 py-0.5 px-0.5 mx-1 md:hover:scale-105 md:hover:font-extrabold" key={genre.id}>{genre.name}</p>
-                                {console.log(genre.name)}
                                 </Link>
                             ))}
                         </div>
