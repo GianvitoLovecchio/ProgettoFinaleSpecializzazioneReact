@@ -15,7 +15,7 @@ export default function Layout() {
         <Sidebar />
 
         {/* Scrollable routed content */}
-        <main className="flex-1 p-6 overflow-y-auto h-full no-scrollbar ml-[45px] md:pl-0">
+        <main className="flex-1 px-3 py-2  overflow-y-auto h-full no-scrollbar ml-[45px] md:pl-0">
           <Outlet />
         </main>
       </div>

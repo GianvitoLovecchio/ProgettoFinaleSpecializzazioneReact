@@ -22,8 +22,8 @@ export default function SearchBar() {
         <form onSubmit={handleSearch} className="w-full max-w-md mx-auto px-2 md:px-4">
             <fieldset
                 className="flex justify-between items-center px-3 border-2 border-blue-600 rounded-2xl 
-                focus-within:border-blue-600 transition-all duration-500 
-                w-full md:w-64 md:focus-within:w-[32rem]"
+                focus-within:border-blue-600 transition-all duration-700 
+                w-full md:w-64 md:focus-within:w-[32rem] mx-auto"
                 role="group"
             >
                 <input

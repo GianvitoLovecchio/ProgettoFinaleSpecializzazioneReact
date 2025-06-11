@@ -12,7 +12,8 @@ export default function CardGame({ game, preferito }) {
     const gameData = preferito ? data : game;
 
     const getRatingColor = (rating) => {
-        if (rating < 3) return "bg-red-800";
+        if (rating == 0) return "bg-blue-600";
+        if (rating > 0 && rating < 3) return "bg-red-800";
         if (rating < 4) return "bg-yellow-400";
         return "bg-green-800";
     };
@@ -25,12 +26,13 @@ export default function CardGame({ game, preferito }) {
                 <div className="flex items-top">
                     <LazyLoadGameImage image={gameData.background_image} />
                 </div>
-                <div className="p-2">
+                <div className="py-2 px-4">
                     <div className="flex justify-between">
                         <div className="flex flex-wrap max-h-10 items-top">
                             {gameData.genres.map((genre, index) => (
-                                <Link key={index} to={`/games/${genre.name}`}>
-                                    <p className="text-[11px] font-bold text-red-800 py-0.5 px-0.5 mx-1 md:hover:scale-105 md:hover:font-extrabold" key={genre.id}>{genre.name}</p>
+                                <Link key={index} to={`/games/${genre.slug}`}>
+                                    <p className="text-[11px] font-bold text-red-800 py-0.5 px-0.5 md:hover:scale-105 md:hover:font-extrabold" key={genre.id}>{genre.name}</p>
+
                                 </Link>
                             ))}
                         </div>
@@ -42,7 +44,7 @@ export default function CardGame({ game, preferito }) {
 
                     <div>
                         <span className={`font-bold text-[10px] text-white rounded-lg px-1.5 items-center ${getRatingColor(gameData.rating)}`}>
-                            {gameData.rating}
+                            {gameData.rating == 0 ? "N/A" : gameData.rating}
                         </span>
                     </div>
                 </div>

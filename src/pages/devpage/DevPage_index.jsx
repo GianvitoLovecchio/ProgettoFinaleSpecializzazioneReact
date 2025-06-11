@@ -4,7 +4,7 @@ import CardGame from "../../components/CardGame";
 import Loader from "../../components/Loader";
 
 export default function DevPage_index() {
-    const { idDev, nameDev } = useParams();
+    const { idDev,nameDev } = useParams();
     const { data, error, loading } = useFetch(`https://api.rawg.io/api/games?key=25026496f67e4b888b43a18359248003&developers=${idDev}`);
     return (
          <>

@@ -35,6 +35,10 @@ function useFetch(initialUrl) {
     }, [url]);
 
     useEffect(() => {
+        updateUrl(initialUrl);
+    }, [initialUrl]);
+
+    useEffect(() => {
         load();
     }, [url]);
 

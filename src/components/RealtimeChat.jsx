@@ -80,7 +80,9 @@ export default function RealtimeChat({ data }) {
                         </div>
                             <small className="text-end text-[9px]">{dayjs().to(dayjs(message.updated_at))}</small>
                     </article>
-                ))}
+                ))
+            }
+            {messages.length === 0 && <p className="text-center mt-2 text-sm">Ancora nessun messaggio</p>}
         </div>
     );
 }
