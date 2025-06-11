@@ -43,8 +43,9 @@ export default function CardGame({ game, preferito }) {
                     <h1 className="my-1 font-bold text-blue-600 text-lg">{gameData.name}</h1>
 
                     <div>
-                        <span className={`font-bold text-[10px] text-white rounded-lg px-1.5 items-center ${getRatingColor(gameData.rating)}`}>
-                            {gameData.rating == 0 ? "N/A" : gameData.rating}
+                        <span className={`font-bold text-[10px] text-white rounded-lg px-1.5 py-0.5 items-center ${getRatingColor(gameData.rating)}`}>
+                            {gameData.rating == 0 ? "N/A" : gameData.rating }
+                            <span className="ml-2">({gameData.reviews_count})</span>
                         </span>
                     </div>
                 </div>
