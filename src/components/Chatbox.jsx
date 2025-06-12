@@ -34,13 +34,13 @@ export default function Chatbox({ data }) {
 
     return (
         <>
-            <div className="rounded border border-blue-600 w-72">
+            <div className="rounded border border-blue-600 w-60 md:w-72">
                 <h4 className="text-center font-bold text-blue-600 border-b border-blue-600">Gamers chat</h4>
                 <div>
                     <RealtimeChat data={data && data} />
                 </div>
                 <div>
-                    <form className="w-72" onSubmit={handleMessageSubmit}>
+                    <form className="w-60 md:w-72" onSubmit={handleMessageSubmit}>
                         <fieldset className="flex items-center rounded-bl border-r border-blue-600 rounded-br rounded-tr bg-blue-100 pr-0 " role="group">
                             <input
                                 className="bg-red-transparent flex-1 h-6 p-2 border-t border-blue-600 rounded-bl rounded-br text-[12px] focus:outline-none"
