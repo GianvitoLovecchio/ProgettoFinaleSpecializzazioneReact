@@ -7,3 +7,4 @@ Librerie utilizzate:
 - zed: per la gestione della validazione dei dati nel form
 - react-spinners per i loader
 - dayjs per gestire le tempistiche dell'invio dei messagfgi nella chatbox
+- framer motion per la gestione delle animazioni
