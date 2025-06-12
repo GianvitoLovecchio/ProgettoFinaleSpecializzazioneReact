@@ -18,14 +18,12 @@ export default function SortPanel() {
             {ordershow ?
                 (
                     <>
-                        <div className={`transition-all duration-1000 ease-in-out
-    ${ordershow ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}
-    flex flex-wrap justify-center sm:justify-start items-center bg-blue-50 mx-2 mb-8 py-4 pb-5 px-4 sm:px-8 rounded-xl shadow-md gap-3 w-full max-w-4xl`}>
+                        <div className={`md:transition-all md:duration-1600 md:ease-in-out flex flex-wrap justify-center sm:justify-between items-center bg-blue-50 mx-2 mb-8 py-4 pb-5 px-4 rounded-xl shadow-md gap-3 md:h-[70px] w-full max-w-4xl`}>
                             <h2 className="hidden md:flex text-lg sm:text-xl font-bold text-blue-600 mr-0 sm:mr-4 w-full sm:w-auto text-center sm:text-left">
                                 Ordina per:
                             </h2>
                             <div className='md:hidden block w-full'>
-                                <div className="flex duratio-1000">
+                                <div className="flex">
                                     <h2 className="text-lg sm:text-xl font-bold text-blue-600 mr-0 sm:mr-4 w-full sm:w-auto text-center sm:text-left">
                                         Ordina per:
                                     </h2>
@@ -68,13 +66,13 @@ export default function SortPanel() {
                                     />
                                 </button>
                             </div>
-                            <X strokeWidth={3} size={30} className="duration-1000 hidden ml-8 md:flex cursor-pointer text-red-600" onClick={() => setOrderShow(false)} />
+                            <X strokeWidth={3} size={30} className= "hidden ml-8 md:inline cursor-pointer text-red-600" onClick={() => setOrderShow(false)} />
                         </div>
                     </>
                 )
                 :
                 (
-                    <div className="flex justify-between duration-1000 items-center bg-blue-50 mx-3 my-4 py-4 px-4 rounded-xl shadow-md gap-3 w-full max-w-4xl md:max-w-full">
+                    <div className="flex justify-between items-center mb-8 bg-blue-50 md:h-[70px] mx-3  px-8 rounded-xl shadow-md gap-3">
                         <h2 className="text-lg sm:text-xl font-bold text-blue-600 mr-0 sm:mr-4 w-full sm:w-auto sm:text-left">
                             Ordina i giochi
                         </h2>
