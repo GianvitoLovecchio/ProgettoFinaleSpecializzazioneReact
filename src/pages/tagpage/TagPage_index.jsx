@@ -1,0 +1,60 @@
+import { useParams } from "react-router";
+import useFetch from "../../hooks/useFetch";
+import { useState, useEffect } from "react";
+import GridCard from "../../components/GridCard";
+
+
+export default function TagPage_index() {
+    const { tagName } = useParams();
+    const [currentPage, setCurrentPage] = useState(1);
+    const [isFetchingMore, setIsFetchingMore] = useState(false);
+    const initialUrl = `https://api.rawg.io/api/games?key=95c63224923a4b51aa9ed6a0e37cf486&tags=${tagName}&page=${currentPage}`;
+    const [allGames, setAllGames] = useState([]);
+    const { data, error, loading, updateUrl } = useFetch(initialUrl);
+
+    // Resetta le variabili all'apertura della pagina, svuota allgames e imposta ad 1 la pagina
+    useEffect(() => {
+        updateUrl(initialUrl);
+    }, [initialUrl, updateUrl]);
+
+     useEffect(() => {
+        setCurrentPage(1);
+        setAllGames([]);
+    }, [])
+
+    // Aggiunge i giochi alla lista
+    useEffect(() => {
+        if (data?.results) {
+            setAllGames(prevGames => [...prevGames, ...data.results]);
+        }
+    }, [data]);
+
+    // Gestisce il caricamento di più giochi
+    useEffect(() => {
+        if (!loading && isFetchingMore) {
+            setIsFetchingMore(false);
+        }
+    }, [loading]);
+
+    return (
+        <>
+            <h1 className="text-3xl text-blue-600 font-semibold mb-1">
+                Risultati per tag : <span className="font-normal italic px-0.5">"{tagName}"</span>
+            </h1>
+            <p className="text-md text-blue-600 font-normal mb-5">
+                Giochi trovati: <span className="font-semibold">{data?.count}</span>
+            </p>
+
+            <GridCard
+                loading={loading}
+                setCurrentPage={setCurrentPage}
+                isFetchingMore={isFetchingMore}
+                setIsFetchingMore={setIsFetchingMore}
+                gameList={allGames}
+                fetchData={data}
+            />
+
+        </>
+
+    );
+}

@@ -51,13 +51,13 @@ export default function GamePage_index() {
                 {session &&
                     <div className="hidden md:flex gap-x-4">
                         {showChatbox ?
-                            <X onClick={() => setShowChatbox(false)} size={35} strokeWidth={2} color="#933E1B" className="cursor-pointer hover:scale-140 duration-400 hover:font-bold relative" />
+                            <X onClick={() => setShowChatbox(false)} size={40} strokeWidth={2} color="#933E1B" className="cursor-pointer hover:scale-140 duration-400 hover:font-bold relative" />
                             :
                             <MessageSquare onClick={() => setShowChatbox(true)} size={35} strokeWidth={2} color="#2563eb" className="cursor-pointer hover:scale-140 duration-400 hover:font-bold relative" />
                         }
                         <ToggleFavorite data={data} size={35} />
                         {showChatbox &&
-                            <div className="m-4 absolute z-2 right-33 top-35 ">
+                            <div className="m-4 absolute z-2 right-48 top-35 ">
                                 <Chatbox data={data && data} />
                             </div>
                         }
@@ -126,10 +126,10 @@ export default function GamePage_index() {
                         {/* {console.log(data.developers)} */}
                         {data.developers.map((developer, index) => (
                             <Link to={`/developer/${developer.id}/${developer.name}`} key={index}>
-                            <span className="md:hover:text-blue-600 ">
-                                {developer.name}
-                            </span>
-                            {/* {console.log(developer)} */}
+                                <span className="md:hover:text-blue-600 ">
+                                    {developer.name}
+                                </span>
+                                {/* {console.log(developer)} */}
                             </Link>
                         ))}
                     </div>
@@ -152,11 +152,11 @@ export default function GamePage_index() {
                     <p className="font-semibold text-lg">Tags: </p>
                     <div className="flex flex-wrap gap-2">
                         {data.tags.map((tag, index) => (
-                            // <Link to={`/games/${genre.slug}`} key={index}>
-                            <span className="md:hover:text-blue-600">
-                                {tag.name}
-                            </span>
-                            // </Link>
+                            <Link to={`/tag/${tag.slug}`} key={index}>
+                                <span className="md:hover:text-blue-600">
+                                    {tag.name}
+                                </span>
+                                /</Link>
                         ))}
                     </div>
                 </div>

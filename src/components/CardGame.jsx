@@ -30,7 +30,7 @@ export default function CardGame({ game, preferito }) {
                         <div className="flex flex-wrap max-h-10 items-top">
                             {gameData.genres.map((genre, index) => (
                                 <Link key={index} to={`/games/${genre.name}`}>
-                                    <p className="text-[11px] font-bold text-red-800 py-0.5 px-0.5 mx-1 md:hover:scale-105 md:hover:font-extrabold" key={genre.id}>{genre.name}</p>
+                                    <p className="text-[11px] font-bold text-red-800 py-0.5 pr-0.5 mx-2 md:hover:scale-105 md:hover:font-extrabold" key={genre.id}>{genre.name}</p>
                                 </Link>
                             ))}
                         </div>
@@ -38,14 +38,14 @@ export default function CardGame({ game, preferito }) {
                             session && <ToggleFavorite data={gameData} size={22} />
                         }
                     </div>
-                    <h1 className="my-1 font-bold text-blue-600 text-lg">{gameData.name}</h1>
+                    <h1 className="my-1 mx-2  font-bold text-blue-600 text-lg">{gameData.name}</h1>
 
-                    <div>
+                    <div className="mx-2">
                         <span className={`font-bold text-[10px] text-white rounded-lg px-1.5 py-0.5 items-center ${getRatingColor(gameData.rating)}`}>
-                            {gameData.rating == 0 ? "N/A" : gameData.rating }
-                            <span className="ml-2">({gameData.reviews_count})</span>
-                        <span className={`font-bold text-[10px] text-white rounded-lg px-1.5 items-center ${getRatingColor(gameData.rating)}`}>
-                            {gameData.rating}
+                            {gameData.rating == 0 ? "N/A" : gameData.rating}
+                            <span className="ml-2">
+                                ({gameData.reviews_count})
+                            </span>
                         </span>
                     </div>
                 </div>

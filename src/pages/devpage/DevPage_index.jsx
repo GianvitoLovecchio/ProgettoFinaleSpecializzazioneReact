@@ -5,14 +5,18 @@ import GridCard from "../../components/GridCard";
 
 export default function DevPage_index() {
     const { idDev, nameDev } = useParams();
-<<<<<<< HEAD
     const [currentPage, setCurrentPage] = useState(1);
     const [isFetchingMore, setIsFetchingMore] = useState(false);
-    const { data, error, loading } = useFetch(`https://api.rawg.io/api/games?key=25026496f67e4b888b43a18359248003&developers=${idDev}&page=${currentPage}`);
+    const initialUrl = `https://api.rawg.io/api/games?key=95c63224923a4b51aa9ed6a0e37cf486&developers=${idDev}&page=${currentPage}`;
     const [allGames, setAllGames] = useState([]);
+    const { data, error, loading, updateUrl } = useFetch(initialUrl);
 
     // Resetta le variabili all'apertura della pagina, svuota allgames e imposta ad 1 la pagina
     useEffect(() => {
+        updateUrl(initialUrl);
+    }, [initialUrl, updateUrl]);
+
+     useEffect(() => {
         setCurrentPage(1);
         setAllGames([]);
     }, [])
@@ -31,9 +35,6 @@ export default function DevPage_index() {
         }
     }, [loading]);
 
-=======
-    const { data, error, loading } = useFetch(`https://api.rawg.io/api/games?key=25026496f67e4b888b43a18359248003&developers=${idDev}`);
->>>>>>> parent of 9227097 (inserito l'aggiunta del bottone per mostrare altri elementi in home page)
     return (
         <>
             <h1 className="text-3xl text-blue-600 font-semibold mb-1">
