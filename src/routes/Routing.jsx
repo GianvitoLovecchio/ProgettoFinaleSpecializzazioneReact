@@ -9,7 +9,6 @@ import AccountPage_index from '../pages/account/AccountPage_index';
 import FavoritesPage_index from '../pages/favorites/FavoritesPage_index';
 import PlatformPage_index from '../pages/platformpage/PlatformPage_index';
 import DevPage_index from '../pages/devpage/DevPage_index';
-import TagPage_index from '../pages/tagpage/TagPage_index';
 import Layout from '../layout/Layout';
 import { BrowserRouter, Routes, Route } from 'react-router';
 
@@ -29,7 +28,6 @@ export default function Routing() {
                     <Route path="/favorites" element={<FavoritesPage_index />}/>
                     <Route path="/platform/:id" element={<PlatformPage_index />}/>
                     <Route path="/developer/:idDev/:nameDev" element={<DevPage_index />}/>
-                    <Route path='/tag/:tagName' element={<TagPage_index />}></Route>
                 </Route>
             </Routes>
         </BrowserRouter>
