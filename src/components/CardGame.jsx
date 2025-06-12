@@ -8,7 +8,7 @@ import Loader from "./Loader"
 
 export default function CardGame({ game, preferito }) {
     const { session } = useContext(SessionContext);
-    const { data, error, load } = useFetch(`https://api.rawg.io/api/games/${game.game_id}?key=25026496f67e4b888b43a18359248003`);
+    const { data, error, load } = useFetch(`https://api.rawg.io/api/games/${game.game_id}?key=95c63224923a4b51aa9ed6a0e37cf486`);
     const gameData = preferito ? data : game;
 
     const getRatingColor = (rating) => {

@@ -7,7 +7,7 @@ export default function GlobalProvider({ children }) {
     const [url, setUrl] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
 
-    const baseUrl = `https://api.rawg.io/api/games?key=25026496f67e4b888b43a18359248003`;
+    const baseUrl = `https://api.rawg.io/api/games?key=95c63224923a4b51aa9ed6a0e37cf486`;
 
     // funzione per aggiornare l'ordinamento (sort + ascendente/descendente)
     const setOrdering = (newSort, newAsc = asc) => {

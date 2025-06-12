@@ -8,7 +8,7 @@ export default function GenrePage_index() {
     const [currentPage, setCurrentPage] = useState(1);
     const [isFetchingMore, setIsFetchingMore] = useState(false);
     const [allGames, setAllGames] = useState([]);
-    const initialUrl = `https://api.rawg.io/api/games?key=25026496f67e4b888b43a18359248003&genres=${genre}&page=${currentPage}`;
+    const initialUrl = `https://api.rawg.io/api/games?key=95c63224923a4b51aa9ed6a0e37cf486&genres=${genre}&page=${currentPage}`;
 
     const { data, error, loading, updateUrl } = useFetch(initialUrl);
 

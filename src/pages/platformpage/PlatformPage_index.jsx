@@ -12,7 +12,7 @@ export default function PlatformPage_index() {
     const { data, loading, error, updateUrl } = useFetch();
 
     useEffect(() => {
-        updateUrl(`https://api.rawg.io/api/games?key=25026496f67e4b888b43a18359248003&platforms=${id}`);
+        updateUrl(`https://api.rawg.io/api/games?key=95c63224923a4b51aa9ed6a0e37cf486&platforms=${id}`);
     }, [id]);
 
     const myPLatform = PlatformsArray.find((p) => p.id === Number(id));

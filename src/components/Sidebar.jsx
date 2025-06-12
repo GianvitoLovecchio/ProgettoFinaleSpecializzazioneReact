@@ -8,7 +8,7 @@ import platformArray from "./PlatformsArray";
 export default function Sidebar() {
   const { favorites } = useContext(FavoritesContext);
   const lunghezza = favorites?.length;
-  const { data } = useFetch("https://api.rawg.io/api/genres?key=25026496f67e4b888b43a18359248003");
+  const { data } = useFetch("https://api.rawg.io/api/genres?key=95c63224923a4b51aa9ed6a0e37cf486");
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [isGenresOpen, setIsGenresOpen] = useState(false);

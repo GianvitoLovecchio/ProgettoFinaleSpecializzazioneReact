@@ -5,7 +5,7 @@ import Loader from "../../components/Loader";
 
 export default function TagPage_index() {
     const { tagName } = useParams();
-    const { data, error, loading } = useFetch(`https://api.rawg.io/api/games?key=25026496f67e4b888b43a18359248003&tags=${tagName}`);
+    const { data, error, loading } = useFetch(`https://api.rawg.io/api/games?key=95c63224923a4b51aa9ed6a0e37cf486&tags=${tagName}`);
     return (
          <>
                     <h1 className="text-3xl text-blue-600 font-semibold mb-1">Tag: <span className="font-normal px-0.5">"{tagName}"</span> </h1>

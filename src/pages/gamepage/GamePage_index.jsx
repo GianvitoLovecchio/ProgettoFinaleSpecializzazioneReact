@@ -14,7 +14,7 @@ export default function GamePage_index() {
     const { slug, id } = useParams()
     const [showChatbox, setShowChatbox] = useState(false)
     const { data: data } = useFetch(
-        `https://api.rawg.io/api/games/${id}?key=25026496f67e4b888b43a18359248003`
+        `https://api.rawg.io/api/games/${id}?key=95c63224923a4b51aa9ed6a0e37cf486`
     )
 
     const [showMore, setShowMore] = useState(false)
