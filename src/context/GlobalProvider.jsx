@@ -22,7 +22,6 @@ export default function GlobalProvider({ children }) {
         const ordering = sort ? `&ordering=${direction}${sort}` : "";
         const newUrl = `${baseUrl}&page=${currentPage}${ordering}`;
         setUrl(newUrl);
-        console.log("Nuovo URL:", newUrl);
     }, [sort, asc, currentPage]);
 
     return (

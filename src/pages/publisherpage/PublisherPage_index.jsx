@@ -48,7 +48,6 @@ export default function PublisherPage_index() {
                 title="Editore" 
                 cardLayout={cardLayout} 
                 setCardLayout={setCardLayout}/>
-{console.log(cardLayout)}
             <GridCard
                 loading={loading}
                 setCurrentPage={setCurrentPage}

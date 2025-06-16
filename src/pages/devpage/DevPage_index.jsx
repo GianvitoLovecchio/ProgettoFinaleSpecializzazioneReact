@@ -46,7 +46,6 @@ export default function DevPage_index() {
                 setCardLayout={setCardLayout}
                 title="Sviluppatore" />
 
-{console.log(cardLayout)}
             <GridCard
                 loading={loading}
                 setCurrentPage={setCurrentPage}

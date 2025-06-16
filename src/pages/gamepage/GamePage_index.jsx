@@ -47,8 +47,6 @@ export default function GamePage_index() {
     return (
         <>
             <div className="max-w-5xl mx-auto p-4">
-                {console.log(data)}
-                {/* {console.log(data_platforms)} */}
                 <div className="flex flex-row justify-between sm:items-center gap-2">
                     <h1 className="text-xl sm:text-2xl font-bold text-blue-600">{data.name}
                         <span className={`mx-2 my-1 font-bold text-[12px] text-white rounded-lg px-1.5 py-1 items-center ${getRatingColor(data.rating)}`}>
@@ -97,7 +95,6 @@ export default function GamePage_index() {
                         {data.publishers?.map((p, index) => {
                             return data.publishers.length > 0 ? (
                                 <Link to={`/publisher/${p.id}/${p.name}`} key={index}>
-                                    {console.log(p)}
                                     <span className="md:hover:text-blue-600 ">
                                         {p.name}
                                         {index !== data.tags.length - 1 && ","}
@@ -137,13 +134,11 @@ export default function GamePage_index() {
                     <div>
                         <p className="font-bold text-lg text-blue-600">Sviluppatori: </p>
                         <div className="flex flex-wrap gap-2">
-                            {/* {console.log(data.developers)} */}
                             {data.developers.map((developer, index) => (
                                 <Link to={`/developer/${developer.id}/${developer.name}`} key={index}>
                                     <span className="md:hover:text-blue-600 ">
                                         {developer.name}
                                     </span>
-                                    {/* {console.log(developer)} */}
                                 </Link>
                             ))}
                         </div>

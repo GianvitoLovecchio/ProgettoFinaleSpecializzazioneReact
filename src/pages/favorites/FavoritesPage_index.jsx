@@ -20,7 +20,6 @@ export default function FavoritesPage_index() {
                                 {favorites.map((game) => (
                                     <CardGame key={game.id} game={game} preferito={true} />
                                 ))}
-                                {console.log(favorites)}
                             </div>
                         </>
                     ) : (
