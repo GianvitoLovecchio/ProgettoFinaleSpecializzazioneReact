@@ -21,10 +21,13 @@ export default function CardGame({ game, preferito }) {
 
     return (
         <>
-            <div className=" rounded-xl shadow-md bg-blue-50 grid  ">
-                <div className="flex items-top">
-                    <LazyLoadGameImage image={gameData.background_image} />
-                </div>
+            <div className=" rounded-xl shadow-md bg-blue-50 grid md:hover:scale-110 transition duration-500 pb-6">
+                {console.log(gameData)}
+                <Link to={`/games/${gameData.slug}/${gameData.id}`}>
+                    <div className="flex items-top">
+                        <LazyLoadGameImage image={gameData.background_image} />
+                    </div>
+                </Link>
                 <div className="p-2">
                     <div className="flex justify-between">
                         <div className="flex flex-wrap max-h-10 items-top">
@@ -40,24 +43,27 @@ export default function CardGame({ game, preferito }) {
                     </div>
                     <h1 className="my-1 mx-2  font-bold text-blue-600 text-lg">{gameData.name}</h1>
 
-                    <div className="mx-2">
-                        <span className={`font-bold text-[10px] text-white rounded-lg px-1.5 py-0.5 items-center ${getRatingColor(gameData.rating)}`}>
+                    <div className="mx-2 my-2 flex justify-between">
+                        <div className={`font-bold text-[10px] text-white rounded-lg px-1.5 pt-0.5 items-center ${getRatingColor(gameData.rating)}`}>
                             {gameData.rating == 0 ? "N/A" : gameData.rating}
                             <span className="ml-2">
                                 ({gameData.reviews_count})
                             </span>
-                        </span>
+                        </div>
+                        <h5 className="text-blue-500 font-semibold text-[12px] flex items-center">
+                            Metacritic: <span className="ml-1 font-bold text-[14px]">{gameData.metacritic}</span>
+                        </h5>
                     </div>
                 </div>
 
-                <div className="flex justify-end mx-4 mb-4">
-                    <Link to={`/games/${gameData.slug}/${gameData.id}`}>
-                        <button className="bg-red-800 border border-red-800 rounded-lg text-white mt-4 py-1 px-2 hover:scale-105 transition duration-250 hover:bg-blue-50 hover:text-black cursor-pointer">
+                {/* <div className="flex justify-end mx-4 mb-4"> */}
+
+                {/* <button className="bg-red-800 border border-red-800 rounded-lg text-white mt-4 py-1 px-2 hover:scale-105 transition duration-250 hover:bg-blue-50 hover:text-black cursor-pointer">
                             Scopri
-                        </button>
-                    </Link>
-                </div>
+                        </button> */}
+                {/* </div> */}
             </div>
+
         </>
     )
 }

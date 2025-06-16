@@ -46,7 +46,7 @@ export default function GamePage_index() {
 
     return (
         <>
-            <div className="max-w-5xl mx-auto bg-blue-60 rounded-xl shadow-lg p-4 sm:p-6 md:p-8 mt-4 md:mt-8">
+            <div className="max-w-5xl mx-auto p-4">
                 {console.log(data)}
                 {/* {console.log(data_platforms)} */}
                 <div className="flex flex-row justify-between sm:items-center gap-2">
@@ -93,21 +93,28 @@ export default function GamePage_index() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-md text-gray-800">
                     <div>
-                        <p className="font-semibold text-lg">Sviluppatori:</p>
-                        <p>{data.developers?.map((d) => d.name).join(", ") || "N/A"}</p>
+                        <p className="font-bold text-lg text-blue-600">Editori:</p>
+                        {data.publishers?.map((p, index) => {
+                            return data.publishers.length > 0 ? (
+                                <Link to={`/publisher/${p.id}/${p.name}`} key={index}>
+                                    {console.log(p)}
+                                    <span className="md:hover:text-blue-600 ">
+                                        {p.name}
+                                        {index !== data.tags.length - 1 && ","}
+                                    </span>
+                                </Link>
+                            ) : (
+                                <p>Non disponibile</p>
+                            )
+                        })}
                     </div>
                     <div>
-                        <p className="font-semibold text-lg">Publisher:</p>
-                        <p>{data.publishers?.map((p) => p.name).join(", ") || "N/A"}</p>
-                    </div>
-                    <div>
-                        <p className="font-semibold text-lg">Data di rilascio:</p>
+                        <p className="font-bold text-lg text-blue-600">Data di rilascio:</p>
                         <p>{data.released}</p>
                     </div>
-                    <div>
-                        <p className="font-semibold text-lg">Piattaforme:</p>
 
-                        {/* {console.log(data.platforms)} */}
+                    <div>
+                        <p className="font-bold text-lg text-blue-600">Piattaforme:</p>
                         <div className="flex gap-2 my-2">
                             {data.platforms?.map((p, index) => {
                                 const match = platformLogos.find(
@@ -128,7 +135,7 @@ export default function GamePage_index() {
                         </div>
                     </div>
                     <div>
-                        <p className="font-semibold text-lg">Sviluppatori: </p>
+                        <p className="font-bold text-lg text-blue-600">Sviluppatori: </p>
                         <div className="flex flex-wrap gap-2">
                             {/* {console.log(data.developers)} */}
                             {data.developers.map((developer, index) => (
@@ -143,7 +150,7 @@ export default function GamePage_index() {
                     </div>
 
                     <div>
-                        <p className="font-semibold text-lg">Genere: </p>
+                        <p className="font-bold text-lg text-blue-600">Genere: </p>
                         <div className="flex flex-wrap gap-2">
                             {data.genres.map((genre, index) => (
                                 <Link to={`/games/${genre.slug}`} key={index}>
@@ -156,19 +163,20 @@ export default function GamePage_index() {
                     </div>
 
                     <div>
-                        <p className="font-semibold text-lg">Tags: </p>
-                        <div className="flex flex-wrap gap-2">
+                        <p className="font-bold text-lg text-blue-600">Tags: </p>
+                        <div className="flex flex-wrap">
                             {data.tags.map((tag, index) => (
                                 <Link to={`/tag/${tag.slug}`} key={index}>
-                                    <span className="md:hover:text-blue-600">
+                                    <span className="md:hover:text-blue-600 ml-1">
                                         {tag.name}
+                                        {index !== data.tags.length - 1 && ","}
                                     </span>
-                                    /</Link>
+                                </Link>
                             ))}
                         </div>
                     </div>
                 </div>
-                {/* bottone e chabox mobile */}
+                {/* bottone e chatbox mobile */}
                 {session && isMobile &&
                     <div className="m-4 flex items-center justify-center md:hidden rounded-xl shadow-md bg-blue-50 p-2">
                         {showChatbox ?

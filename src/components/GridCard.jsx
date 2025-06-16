@@ -10,7 +10,7 @@ export default function GridCard({ loading, setCurrentPage, isFetchingMore, setI
                 <Loader />
             ) : (
                 <>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mx-4 md:mx-2 y-8">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:mx-4 y-8">
                         {gameList.map((game) => (
                             <CardGame key={game.id} game={game} />
                         ))}
