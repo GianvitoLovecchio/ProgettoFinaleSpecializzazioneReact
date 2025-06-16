@@ -58,20 +58,20 @@ export default function RegistrationForm() {
             return;
         }
         //se non ci sono errori, effettua la registrazione dell'utente utilizzando nmail e password come dati
-        let { error: signUpError } = await supabase.auth.signUp({
-            email: data.email,
-            password: data.password,
-            //in più aggiunge gli altri dati relativi all'utente
+        const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+            email: formState.email,
+            password: formState.password,
             options: {
                 data: {
-                    first_name: data.firstName,
-                    last_name: data.lastName,
-                    username: data.username,
-                    phone: data.phone,
+                    first_name: formState.firstName,
+                    last_name: formState.lastName,
+                    username: formState.username,
+                    phone: formState.phone,
                     avatar_url: formState.avatar_url || noImage,
                 },
             },
         });
+
 
         //se ci sono errori, mostra un messaggio di errore
         if (signUpError) {
@@ -79,9 +79,23 @@ export default function RegistrationForm() {
             return;
             //altrimenti mostra un messaggio di successo e reindirizza alla home dopo 2 secondi
         } else {
-            // alert("La resistrazione è stata effettuata con successo! Verrai reindirizzato alla homepage.");
-            // setTimeout(() => navigate("/"), 1000);
             setSignInState(true)
+        }
+
+        const { error: insertError } = await supabase
+            .from('profiles')
+            .insert({
+                id: signUpData.user.id,
+                username: formState.username,
+                first_name: formState.firstName,
+                last_name: formState.lastName,
+                avatar_url: formState.avatar_url,
+                phone: formState.phone,
+            });
+
+        if (insertError) {
+            console.log("Errore inserimento profilo:", insertError);
+            return;
         }
     }
 

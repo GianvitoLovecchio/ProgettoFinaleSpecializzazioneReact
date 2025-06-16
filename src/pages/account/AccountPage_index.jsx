@@ -151,7 +151,7 @@ export default function AccountPage_index() {
                             <div>
                                 <InputFormUpdate
                                     onChangeFunction={setPhone}
-                                    valor={phone? phone : "nessun valore"}
+                                    valor={phone? phone : "1234567890"}
                                     label="Telefono"
                                     type="text"
                                     id="phone"

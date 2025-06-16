@@ -1,8 +1,9 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { ChevronDown } from "lucide-react";
 import { Link } from "react-router";
 import supabase from "../supabase/supabase-client";
 import { useNavigate } from "react-router";
+import SessionContext from "../context/SessionContext";
 import { useProfile } from "../context/ProfileProvider";
 
 export default function NavbarDropdown({ label = "Menu", items = [] }) {
@@ -10,18 +11,18 @@ export default function NavbarDropdown({ label = "Menu", items = [] }) {
     const menuRef = useRef();
     const navigate = useNavigate();
     const {setProfile,  setAvatarImgUrl } = useProfile();
-    const [logout, setLogout] = useState(null);
+    const { logout } = useContext(SessionContext);
 
 
     
   const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
+    await supabase.auth.signOut(); // chiama la funzione di supabase qui direttamente
+    logout(); // richiama la funzione globale del context
+    setProfile(null); // pulisci il profilo
+    setAvatarImgUrl(null); // pulisci l'avatar
+    navigate("/"); // vai alla home
+}
 
-    alert("Logout effettuato con successo");
-    navigate("/");
-    setProfile(null);
-    setAvatarImgUrl(null);
-  }
 
     // Chiude il menu cliccando fuori
     useEffect(() => {
