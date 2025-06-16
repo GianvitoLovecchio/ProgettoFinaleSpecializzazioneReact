@@ -104,11 +104,11 @@ export default function Login_index() {
                     redirectState={loginState}
                     redirect="/" />
             }
-            <div className="flex items-center justify-center p-4 ">
-                <div className="w-full max-w-4/5 ">
+            <div className="flex items-center justify-center md:p-4 ">
+                <div className="w-full md:max-w-4/5 ">
                     <form
                         onSubmit={onSubmit}
-                        className="p-10 rounded-xl shadow-md bg-blue-50">
+                        className=" px-3 py-6 md:p-10 rounded-xl shadow-md bg-blue-50">
                         {/* {
                             loginError &&
                                 <div className="flex px-2 justify-between mb-4 py-2 bg-red-200 rounded-md text-center text-red-800 font-bold text-xl ">

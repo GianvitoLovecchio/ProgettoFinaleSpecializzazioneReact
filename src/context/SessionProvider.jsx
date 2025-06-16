@@ -5,7 +5,7 @@ import LogoutModal from "../components/LogoutModal";
 
 export default function SessionProvider({ children }) {
     const [session, setSession] = useState(null);
-    const [showLogoutModal, setShowLogoutModal] = useState(true);
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
 
 
     const logout = () => {

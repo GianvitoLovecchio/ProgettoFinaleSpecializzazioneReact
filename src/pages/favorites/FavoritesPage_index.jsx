@@ -15,8 +15,8 @@ export default function FavoritesPage_index() {
                 favorites?.length > 0 ?
                     (
                         <>
-                            <h1 className="text-4xl font-bold text-blue-600 m-4">I tuoi preferiti</h1>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mx-4 md:mx-2 y-8">
+                            <h1 className="text-4xl font-bold text-blue-600 md:my-8 md:m-4 mb-6">I tuoi preferiti</h1>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mx-2 md:mx-4 y-8">
                                 {favorites.map((game) => (
                                     <CardGame key={game.id} game={game} preferito={true} />
                                 ))}

@@ -13,21 +13,21 @@ import { set } from "zod/v4";
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const { session } = useContext(SessionContext);
+  const { session, logout } = useContext(SessionContext);
   const { profile, avatarImgUrl } = useProfile();
   const {setProfile,  setAvatarImgUrl } = useProfile();
 
 
     
-  const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
-
-    alert("Logout effettuato con successo");
+  const handleLogout = async () => {
+    await supabase.auth.signOut(); // chiama supabase
+    logout(); // centralizzato: fa tutto (modale, pulizia sessione)
     setProfile(null);
-    setAvatarImgUrl(null)
-    isOpen && setIsOpen(false)
-    navigate("/");
-  }
+    setAvatarImgUrl(null);
+    setIsOpen(false); // chiudi il mobile menu se aperto
+    navigate("/"); // vai alla home
+};
+
 
   return (
     <nav className="sticky top-0 left-0 bg-blue-100 w-full z-50">
@@ -119,8 +119,7 @@ export default function Navbar() {
               >
                 Il mio profilo
               </Link>
-              <SearchBar/>
-              <button onClick={signOut} href="#" className="block font-bold text-lg text-red-600">Logout</button>
+              <button onClick={handleLogout} href="#" className="block font-bold text-lg text-red-600">Logout</button>
             </>
           )}
         </div>

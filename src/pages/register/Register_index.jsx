@@ -177,11 +177,11 @@ export default function RegistrationForm() {
                     redirectState={signInState}
                     redirect="/" />
             }
-            <div className="flex items-center justify-center p-4 ">
-                <div className="w-full max-w-4/5 ">
+            <div className="flex items-center justify-center md:p-4 ">
+                <div className="w-full md:max-w-4/5 ">
                     <form
                         onSubmit={onSubmit}
-                        className="p-10 rounded-xl shadow-md bg-blue-50">
+                        className="px-5 py-6 md:p-10 rounded-xl shadow-md bg-blue-50">
                         {/* Email */}
                         <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
                             <div>

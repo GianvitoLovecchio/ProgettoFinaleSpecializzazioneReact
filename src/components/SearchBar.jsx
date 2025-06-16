@@ -6,6 +6,7 @@ export default function SearchBar() {
     const navigate = useNavigate();
     const [search, setSearch] = useState("");
     const [ariaInvalid, setAriaInvalid] = useState(null); // fix typo (INvalid → Invalid)
+    
 
     const handleSearch = (e) => {
         e.preventDefault();
