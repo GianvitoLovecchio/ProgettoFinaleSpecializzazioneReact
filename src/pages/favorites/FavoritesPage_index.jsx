@@ -2,6 +2,7 @@ import { useContext } from "react";
 import FavoritesContext from "../../context/FavoritesContext";
 import SessionContext from "../../context/SessionContext";
 import CardGame from "../../components/CardGame";
+import  {Link}  from "react-router";
 
 export default function FavoritesPage_index() {
     const { favorites } = useContext(FavoritesContext);
@@ -28,7 +29,13 @@ export default function FavoritesPage_index() {
                         </div>
                     )
             ) : (
-                <h1 className="text-5xl font-bold text-center m-4">Devi essere loggato per vedere i preferiti</h1>
+                <h1 className="text-3xl text-blue-500 italic font-normal text-center m-4 md:mt-30 ">
+                    Effettua il 
+                <Link to="/login"> <span className="font-extrabold md:hover:underline">login</span> </Link>
+                per visualizzare i tuoi preferiti o 
+                <Link to="/register"> <span className="font-extrabold md:hover:underline">registrati</span> </Link>
+                per creare la tua lista di giochi preferiti.
+                </h1>
             )
             }
         </>

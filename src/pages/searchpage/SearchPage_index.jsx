@@ -2,6 +2,7 @@ import { useSearchParams } from "react-router";
 import useFetch from "../../hooks/useFetch";
 import { useEffect, useState } from "react";
 import GridCard from "../../components/GridCard";
+import TopLayout from "../../components/TopLayout";
 
 export default function SearchPage_index() {
     let [searchParams] = useSearchParams();
@@ -10,6 +11,7 @@ export default function SearchPage_index() {
     const [isFetchingMore, setIsFetchingMore] = useState(false);
     const [allGames, setAllGames] = useState([]);
     const initialUrl = `https://api.rawg.io/api/games?key=95c63224923a4b51aa9ed6a0e37cf486&search=${game}&page=${currentPage}`;
+    const [cardLayout, setCardLayout] = useState(true);
 
     const { data, error, loading, updateUrl } = useFetch(initialUrl);
 
@@ -38,15 +40,21 @@ export default function SearchPage_index() {
 
     return (
         <>
-            <h1 className="text-3xl text-blue-600 font-semibold mb-1">Risultati ricerca per: "<span className="font-normal px-0.5">{game}</span>" </h1>
-            <p className="text-md text-blue-600 font-norlmal mb-5">Giochi trovati: <span className="font-semibold">{data?.count}</span> </p>
+            <TopLayout
+                param={`"${game}"`}
+                gameCount={data?.count}
+                cardLayout={cardLayout}
+                setCardLayout={setCardLayout}
+                title="Risultati ricerca per" />
+
             <GridCard
                 loading={loading}
                 setCurrentPage={setCurrentPage}
                 isFetchingMore={isFetchingMore}
                 setIsFetchingMore={setIsFetchingMore}
                 gameList={allGames}
-                fetchData={data} />
+                fetchData={data}
+                cardLayout={cardLayout} />
         </>
     )
 }

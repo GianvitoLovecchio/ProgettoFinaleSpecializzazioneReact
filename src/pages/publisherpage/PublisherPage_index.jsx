@@ -3,6 +3,7 @@ import useFetch from "../../hooks/useFetch";
 import { useState, useEffect } from "react";
 import GridCard from "../../components/GridCard";
 import ControlPanel from "../../components/ControlPanel";
+import TopLayout from "../../components/TopLayout";
 
 export default function PublisherPage_index() {
     const { idPublisher, namePublisher } = useParams();
@@ -41,18 +42,13 @@ export default function PublisherPage_index() {
     return (
         <>
 
-            <div className="flex justify-between">
-                <div className="w-full">
-                    <h1 className="md:text-3xl text-lg text-blue-600 font-semibold mb-1">
-                        Editore: <span className="font-bold px-0.5">{namePublisher}</span>
-                    </h1>
-                    <p className="text-md text-blue-600 font-normal mb-5">
-                        Giochi trovati: <span className="font-semibold">{data?.count}</span>
-                    </p>
-                </div>
-                 <ControlPanel cardLayout={cardLayout} setCardLayout={setCardLayout}></ControlPanel>
-            </div>
-
+           <TopLayout 
+                param={namePublisher} 
+                gameCount={data?.count} 
+                title="Editore" 
+                cardLayout={cardLayout} 
+                setCardLayout={setCardLayout}/>
+{console.log(cardLayout)}
             <GridCard
                 loading={loading}
                 setCurrentPage={setCurrentPage}

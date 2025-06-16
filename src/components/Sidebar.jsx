@@ -2,11 +2,13 @@ import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router";
 import { ChevronsRight, Heart, Gamepad2, ChevronsDown, Joystick } from "lucide-react";
 import FavoritesContext from "../context/FavoritesContext";
+import SessionContext from "../context/SessionContext";
 import useFetch from "../hooks/useFetch";
 import platformArray from "./PlatformsArray";
 
 export default function Sidebar() {
   const { favorites } = useContext(FavoritesContext);
+  const { session } = useContext(SessionContext);
   const lunghezza = favorites?.length;
   const { data } = useFetch("https://api.rawg.io/api/genres?key=95c63224923a4b51aa9ed6a0e37cf486");
   const navigate = useNavigate();
@@ -27,10 +29,12 @@ export default function Sidebar() {
       <aside className="hidden md:block w-1/5 h-[calc(100vh-64px)] shadow-md overflow-y-auto sticky top-[64px] pl-2 pr-4 no-scrollbar">
         <nav className="flex flex-col py-4 gap-4">
           {/* bottone preferiti */}
-          <Link to="/favorites" className="flex text-blue-600 font-bold my-1">
-            <Heart strokeWidth={2} size={22} className="mt-1.5 mx-2" />
-            <h2 className="text-2xl">Preferiti <span className="text-xl font-medium">({lunghezza})</span></h2>
-          </Link>
+          {session &&
+            <Link to="/favorites" className="flex text-blue-600 font-bold my-1">
+              <Heart strokeWidth={2} size={22} className="mt-1.5 mx-2" />
+              <h2 className="text-2xl">Preferiti <span className="text-xl font-medium">({lunghezza})</span></h2>
+            </Link>
+          }
 
           {/* BOttone generi */}
           <details className="group rounded">
@@ -101,16 +105,18 @@ export default function Sidebar() {
 
           <nav className="flex flex-col items-start px-1.5 transition-all duration-300">
             {/* Preferiti */}
-            <button
-              onClick={() => {
-                if (isOpen) handleNavigate("/favorites");
-                else setIsOpen(true);
-              }}
-              className="flex items-center h-12 my-2 text-blue-600"
-            >
-              <Heart size={32} strokeWidth={2.5} className="my-auto mx-2" />
-              {isOpen && <span className="ml-1 text-blue-600 font-bold text-xl">Preferiti ({lunghezza})</span>}
-            </button>
+            {session &&
+              <button
+                onClick={() => {
+                  if (isOpen) handleNavigate("/favorites");
+                  else setIsOpen(true);
+                }}
+                className="flex items-center h-12 my-2 text-blue-600"
+              >
+                <Heart size={32} strokeWidth={2.5} className="my-auto mx-2" />
+                {isOpen && <span className="ml-1 text-blue-600 font-bold text-xl">Preferiti ({lunghezza})</span>}
+              </button>
+            }
 
             {/* Generi */}
             {/* bottone generi aperto */}
@@ -191,7 +197,7 @@ export default function Sidebar() {
               </details>
             )}
 
-            {/* bottone piattaforme chiuso */}  
+            {/* bottone piattaforme chiuso */}
             {!isOpen && (
               <button
                 onClick={() => setIsOpen(true)}

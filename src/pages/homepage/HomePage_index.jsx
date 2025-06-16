@@ -2,7 +2,7 @@ import useFetch from "../../hooks/useFetch";
 import GridCard from "../../components/GridCard";
 import { useContext, useEffect, useState } from "react";
 import SessionContext from "../../context/SessionContext";
-import Loader from "../../components/Loader";
+import ControlPanel from "../../components/ControlPanel";
 
 export default function HomePage_index() {
     const { session } = useContext(SessionContext);
@@ -11,8 +11,9 @@ export default function HomePage_index() {
     const [allGames, setAllGames] = useState([]);
     const initialUrl = `https://api.rawg.io/api/games?key=95c63224923a4b51aa9ed6a0e37cf486&page=${currentPage}`;
     const { data, error, loading, updateUrl } = useFetch(initialUrl);
+    const [cardLayout, setCardLayout] = useState(true);
 
-   useEffect(() => {
+    useEffect(() => {
         updateUrl(initialUrl);
     }, [initialUrl, updateUrl]);
 
@@ -37,6 +38,10 @@ export default function HomePage_index() {
 
     return (
         <>
+            <ControlPanel
+                cardLayout={cardLayout}
+                setCardLayout={setCardLayout}
+            />
             <GridCard
                 loading={loading}
                 setCurrentPage={setCurrentPage}
@@ -44,6 +49,7 @@ export default function HomePage_index() {
                 setIsFetchingMore={setIsFetchingMore}
                 gameList={allGames}
                 fetchData={data}
+                cardLayout={cardLayout}
             />
         </>
     );

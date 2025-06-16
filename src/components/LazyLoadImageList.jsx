@@ -11,7 +11,7 @@ export default function LazyLoadGameImage({ image }) {
                         src={image}
                         alt="game"
                         effect="blur"
-                        className="h-full object-cover"
+                        className="w-full object-fill"
                         wrapperProps={{
                             style: { transition: "1s" }
                         }}

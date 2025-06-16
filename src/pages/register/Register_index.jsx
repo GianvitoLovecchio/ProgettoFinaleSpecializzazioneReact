@@ -141,7 +141,7 @@ export default function RegistrationForm() {
         //salva l'url pubblico nel formState
         setFormState((prev) => ({
             ...prev,
-            avatar_url: data.publicUrl, // URL pubblico da salvare nel profilo
+            avatar_url: filePath, // URL pubblico da salvare nel profilo
         }));
     };
 

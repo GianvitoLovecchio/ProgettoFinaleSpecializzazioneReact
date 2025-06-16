@@ -14,7 +14,7 @@ export default function ToggleFavorite({ data, size }) {
         <>
             {isFavorite ? (
                 <button className="text-red-600 cursor-pointer md:hover:scale-140 md:duration-400 md:hover:font-bold flex items-top" onClick={() => removeFavorites(data.id)}>
-                    <HeartMinus strokeWidth={2} size={size} />
+                    <HeartMinus strokeWidth={3} size={size} />
                 </button>
             ) : (
                 <button className="cursor-pointer md:hover:scale-140 md:duration-400 md:hover:font-bold flex items-top" onClick={() => addFavorites(data)}>
