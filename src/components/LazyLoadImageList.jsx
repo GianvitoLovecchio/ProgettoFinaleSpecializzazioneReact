@@ -6,17 +6,17 @@ export default function LazyLoadGameImage({ image }) {
     return (
 
         
-                <div className="md:w-[150px] md:h-[70px] w-[85px] h-[65px] rounded-tl-xl rounded-bl-xl" >
-                    <LazyLoadImage
-                        src={image}
-                        alt="game"
-                        effect="blur"
-                        className="w-full object-fill"
-                        wrapperProps={{
-                            style: { transition: "1s" }
-                        }}
-                    />
-                </div>
+                 <div className="relative md:w-[150px] md:h-[70px] w-[100px] h-[9vh] overflow-hidden rounded-tl-xl rounded-bl-xl">
+            <LazyLoadImage
+                src={image}
+                alt="game"
+                effect="blur"
+                className="w-full h-full object-cover"
+                wrapperProps={{
+                    style: { transition: "1s" }
+                }}
+            />
+        </div>
             
 
     )

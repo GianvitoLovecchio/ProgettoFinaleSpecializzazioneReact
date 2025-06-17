@@ -90,11 +90,11 @@ export default function Sidebar() {
         className="md:hidden fixed top-[64px] left-0 h-[calc(100vh-64px)] z-40 transition-all duration-500"
         style={{ width: isOpen ? '55%' : '60px', backgroundColor: isOpen ? 'rgba(219,234,254,0.9)' : 'rgba(0, 0, 0, 0)' }}
       >
-        <div className="bg-transparent shadow-lg h-full shadow-xl relative overflow-y-auto no-scrollbar transition-all duration-500">
+        <div className="bg-transparent shadow-lg h-full relative overflow-y-auto no-scrollbar transition-all duration-500">
           {/* bottone apertura/chiusura sidebar */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="items-center text-red-600 block ml-auto mr-4 mt-2"
+            className={`items-center text-red-600 block mt-2 ${isOpen ? "ml-auto" : "ml-0.5"} `}
           >
             <ChevronsRight
               className={`ml-2 transition-transform duration-1000 ${isOpen ? 'rotate-180' : ''}`}
@@ -126,7 +126,7 @@ export default function Sidebar() {
                 open={isGenresOpen}
                 onClick={() => setIsGenresOpen((prev) => !prev)}
               >
-                <summary className="flex list-none cursor-pointer text-blue-600 font-bold text-xl">
+                <summary className="flex list-none cursor-pointer text-blue-600 font-bold text-xl items-center">
                   <Gamepad2 size={32} strokeWidth={2.5} className="my-2 mx-2" />
                   Generi
                   <ChevronsDown
@@ -168,7 +168,7 @@ export default function Sidebar() {
                 open={isPlatformsOpen}
                 onClick={() => setIsPlatformsOpen((prev) => !prev)}
               >
-                <summary className="flex list-none cursor-pointer text-blue-600 font-bold text-xl my-2">
+                <summary className="flex list-none cursor-pointer text-blue-600 font-bold text-xl my-2 items-center">
                   <Joystick size={32} strokeWidth={2.5} className="my-auto mx-2" />
                   Piattaforme
                   <ChevronsDown
