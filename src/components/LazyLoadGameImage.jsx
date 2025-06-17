@@ -7,7 +7,7 @@ export default function LazyLoadGameImage({ image, detail }) {
         : "w-full overflow-hidden h-40 rounded-tl-xl rounded-tr-xl ";
       const imgLazyClass = detail
         ? "h-full object-fill mx-auto" 
-        : "w-full object-cover";
+        : "h-full w-full object-cover";
 
     return (
          <div className={containerClass}>

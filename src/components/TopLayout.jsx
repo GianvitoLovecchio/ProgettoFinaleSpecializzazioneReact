@@ -11,8 +11,8 @@ export default function TopLayout({ param, gameCount, cardLayout, setCardLayout,
                         Giochi trovati: <span className="font-semibold">{gameCount}</span>
                     </p>
                 </div>
-                <ControlPanel cardLayout={cardLayout} setCardLayout={setCardLayout}></ControlPanel>
             </div>
+            <ControlPanel cardLayout={cardLayout} setCardLayout={setCardLayout}></ControlPanel>
         </>
     )
 }

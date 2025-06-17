@@ -2,10 +2,12 @@ import useFetch from "../../hooks/useFetch";
 import GridCard from "../../components/GridCard";
 import { useContext, useEffect, useState } from "react";
 import SessionContext from "../../context/SessionContext";
+import GlobalContext from "../../context/GlobalContext";
 import ControlPanel from "../../components/ControlPanel";
 
 export default function HomePage_index() {
     const { session } = useContext(SessionContext);
+    const {sort, setSort} = useContext(GlobalContext);
     const [currentPage, setCurrentPage] = useState(1);
     const [isFetchingMore, setIsFetchingMore] = useState(false);
     const [allGames, setAllGames] = useState([]);
@@ -14,13 +16,15 @@ export default function HomePage_index() {
     const [cardLayout, setCardLayout] = useState(true);
 
     useEffect(() => {
-        updateUrl(initialUrl);
-    }, [initialUrl, updateUrl]);
+        const newUrl = `https://api.rawg.io/api/games?key=95c63224923a4b51aa9ed6a0e37cf486&page=${currentPage}${sort ? `&ordering=${sort}` : ''}`;
+        updateUrl(newUrl);
+        console.log("entrato")
+    }, [currentPage, updateUrl, sort]);
 
     useEffect(() => {
         setCurrentPage(1);
         setAllGames([]);
-    }, [])
+    }, [sort])
 
     // Aggiunge i giochi alla lista
     useEffect(() => {

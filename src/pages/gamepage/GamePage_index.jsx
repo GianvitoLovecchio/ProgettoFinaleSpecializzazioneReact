@@ -48,12 +48,12 @@ export default function GamePage_index() {
         <>
             <div className="max-w-5xl mx-auto p-4">
                 <div className="flex flex-row justify-between sm:items-center gap-2">
-                    <h1 className="text-xl sm:text-2xl font-bold text-blue-600">{data.name}
-                        <span className={`mx-2 my-1 font-bold text-[12px] text-white rounded-lg px-1.5 py-1 items-center ${getRatingColor(data.rating)}`}>
+                    <h1 className="flex items-center md:text-3xl text-[18px] font-bold text-blue-600">{data.name}
+                        <span className={`mx-2 my-1 font-bold text-[8px] md:text-[14px] text-white rounded-lg px-1.5 py-1 items-center ${getRatingColor(data.rating)}`}>
                             {data.rating}
                         </span>
                     </h1>
-                    {session && !isMobile &&
+                    {!isMobile &&
                         <div className="hidden md:flex gap-x-4">
                             {showChatbox ?
                                 <X onClick={() => setShowChatbox(false)} size={40} strokeWidth={2} color="#933E1B" className="cursor-pointer hover:scale-140 duration-400 hover:font-bold relative" />
@@ -62,7 +62,7 @@ export default function GamePage_index() {
                             }
                             <ToggleFavorite data={data} size={35} />
                             {showChatbox &&
-                                <div className="m-4 absolute z-2 right-48 top-35 ">
+                                <div className="m-4 absolute z-2 right-28 top-30 ">
                                     <Chatbox data={data && data} />
                                 </div>
                             }
@@ -172,7 +172,7 @@ export default function GamePage_index() {
                     </div>
                 </div>
                 {/* bottone e chatbox mobile */}
-                {session && isMobile &&
+                {isMobile &&
                     <div className="m-4 flex items-center justify-center md:hidden rounded-xl shadow-md bg-blue-50 p-2">
                         {showChatbox ?
                             (<button className="cursor-pointer flex" onClick={() => setShowChatbox(false)}>

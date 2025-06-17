@@ -40,7 +40,8 @@ export default function Chatbox({ data }) {
                     <RealtimeChat data={data && data} />
                 </div>
                 <div>
-                    <form className="w-60 md:w-72" onSubmit={handleMessageSubmit}>
+                    {session ? (
+                      <form className="w-60 md:w-72" onSubmit={handleMessageSubmit}>
                         <fieldset className="flex items-center rounded-bl border-r border-blue-600 rounded-br rounded-tr bg-blue-100 pr-0 " role="group">
                             <input
                                 className="bg-red-transparent flex-1 h-6 p-2 border-t border-blue-600 rounded-bl rounded-br text-[12px] focus:outline-none"
@@ -55,7 +56,11 @@ export default function Chatbox({ data }) {
                                 <SendHorizontal strokeWidth={2} size={15} />
                             </button>
                         </fieldset>
-                    </form>
+                    </form>  
+                    ) :(
+                        <p className="rounded-br rounded-lr text-center text-blue-500 font-bold bg-blue-50 text-sm">Per chattare devi essere loggato</p>
+                    )}
+                    
                 </div>
             </div>
         </>

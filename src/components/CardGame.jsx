@@ -5,6 +5,7 @@ import { useContext } from "react"
 import SessionContext from "../context/SessionContext"
 import useFetch from "../hooks/useFetch"
 import Loader from "./Loader"
+import { Plus } from "lucide-react"
 
 export default function CardGame({ game, preferito }) {
     const { session } = useContext(SessionContext);
@@ -40,7 +41,9 @@ export default function CardGame({ game, preferito }) {
                             session && <ToggleFavorite data={gameData} size={22} />
                         }
                     </div>
-                    <h1 className="my-1 mx-2  font-bold text-blue-600 text-lg">{gameData.name}</h1>
+                    <Link to={`/games/${gameData.slug}/${gameData.id}`}>
+                        <h1 className="my-1 mx-2 md:hover:underline font-bold text-blue-600 text-lg">{gameData.name}</h1>
+                    </Link>
 
                     <div className="mx-2 my-2 flex justify-between">
                         <div className={`font-bold text-[10px] text-white rounded-lg px-1.5 pt-0.5 items-center ${getRatingColor(gameData.rating)}`}>
@@ -49,6 +52,12 @@ export default function CardGame({ game, preferito }) {
                                 ({gameData.reviews_count})
                             </span>
                         </div>
+                        {gameData.added &&
+                            <div className="flex items-center bg-blue-500 text-white rounded-lg px-1.5 text-[10px]">
+                                <span className="mr-1"><Plus strokeWidth={6} size={13} /></span>
+                                <span className="font-bold ">{gameData.added}</span>
+                            </div>
+                        }
                         <h5 className="text-blue-500 font-semibold text-[12px] flex items-center">
                             Metacritic: <span className="ml-1 font-bold text-[14px]">{gameData.metacritic}</span>
                         </h5>

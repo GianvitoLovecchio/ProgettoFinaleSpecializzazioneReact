@@ -14,8 +14,9 @@ export default function GridCard({ loading, setCurrentPage, isFetchingMore, setI
                 <>
                     {cardLayout ? (
                         <>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:mx-4 y-8">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-6 md:mx-4 y-8">
                                 {gameList.map((game) => (
+                                    game.background_image &&
                                     <CardGame key={game.id} game={game} />
                                 ))}
                             </div>

@@ -1,11 +1,26 @@
 import { useState, useEffect } from 'react'
 import GlobalContext from './GlobalContext'
+import { set } from 'zod/v4';
+import { title } from 'framer-motion/client';
 
 export default function GlobalProvider({ children }) {
     const [sort, setSort] = useState("");
     const [asc, setAsc] = useState(true);
     const [url, setUrl] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
+    const options = [
+        {title: "Resetta", value: ""},  
+        { title: "Nome A-Z", value: "name" },
+        { title: "Nome Z-A", value: "-name" },
+        { title: "Più recente", value: "-released" },
+        { title: "Meno recente", value: "released" },
+        { title: "Popolarità crescente", value: "added" },
+        { title: "Popolarità decrescente", value: "-added" },
+        { title: "Voto metacritic crescente", value: "metacritic" },
+        { title: "Voto metacritic decrescente", value: "-metacritic" },
+        { title: "Voto utenti crescente", value: "rating" },
+        { title: "Voto utenti decrescente", value: "-rating" },
+    ];
 
     const baseUrl = `https://api.rawg.io/api/games?key=95c63224923a4b51aa9ed6a0e37cf486`;
 
@@ -17,22 +32,23 @@ export default function GlobalProvider({ children }) {
     };
 
     // aggiorna URL ogni volta che cambia sort, asc o currentPage
-    useEffect(() => {
-        const direction = asc ? "" : "-";
-        const ordering = sort ? `&ordering=${direction}${sort}` : "";
-        const newUrl = `${baseUrl}&page=${currentPage}${ordering}`;
-        setUrl(newUrl);
-    }, [sort, asc, currentPage]);
+    // useEffect(() => {
+    //     const direction = asc ? "" : "-";
+    //     const ordering = sort ? `&ordering=${direction}${sort}` : "";
+    //     const newUrl = `${baseUrl}&page=${currentPage}${ordering}`;
+    //     setUrl(newUrl);
+    // }, [sort, asc, currentPage]);
 
     return (
         <GlobalContext.Provider
             value={{
                 sort,
-                asc,
+                setSort,
                 currentPage,
                 setCurrentPage,
                 url,
                 setOrdering,
+                options,
             }}
         >
             {children}

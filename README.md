@@ -8,3 +8,4 @@ Librerie utilizzate:
 - react-spinners per i loader
 - dayjs per gestire le tempistiche dell'invio dei messagfgi nella chatbox
 - framer motion per la gestione delle animazioni
+- headlessUi per la select di ordinamento
