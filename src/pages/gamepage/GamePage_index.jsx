@@ -60,7 +60,9 @@ export default function GamePage_index() {
                                 :
                                 <MessageSquare onClick={() => setShowChatbox(true)} size={35} strokeWidth={2} color="#2563eb" className="cursor-pointer hover:scale-140 duration-400 hover:font-bold relative" />
                             }
-                            <ToggleFavorite data={data} size={35} />
+                            {
+                                session && <ToggleFavorite data={data} size={35} />
+                            }
                             {showChatbox &&
                                 <div className="m-4 absolute z-2 right-28 top-30 ">
                                     <Chatbox data={data && data} />
