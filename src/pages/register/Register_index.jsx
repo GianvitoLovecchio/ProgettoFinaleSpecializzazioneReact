@@ -76,6 +76,7 @@ export default function RegistrationForm() {
         //se ci sono errori, mostra un messaggio di errore
         if (signUpError) {
             setSignInState(false)
+            console.log("Errore registrazione:", signUpError);
             return;
             //altrimenti mostra un messaggio di successo e reindirizza alla home dopo 2 secondi
         } else {

@@ -68,7 +68,7 @@ export default function RealtimeChat({ data }) {
 
 
     return (
-        <div className="px-[3px] w-full md:h-[50vh] h-[30vh] flex flex-col justify-between bg-blue-200 overflow-y-scroll" ref={messageRef}>
+        <div className="px-[3px] w-full md:h-[50vh] h-[30vh] flex flex-col justify-end bg-blue-200 overflow-y-scroll" ref={messageRef}>
             {loadingInitial && <Loader/>}
             {error && <article>{error}</article>}
             {messages &&
