@@ -30,7 +30,7 @@ export default function CardGameList({ game, preferito }) {
                         <div className="flex flex-wrap max-w-full ml-2">
                             {gameData.genres.map((genre, index) => (
                                 index < 2 ?
-                                    (<Link key={index} to={`/games/${genre.name}`}>
+                                    (<Link key={index} to={`/games/${genre.slug}`}>
                                         <span className="md:text-[11px] text-[9px] font-bold text-red-800 py-0.5 pr-0.5 md:mx-2 md:hover:scale-105 md:hover:font-extrabold" key={genre.id}>{genre.name}</span>
                                     </Link>) : null
                             ))}
@@ -45,7 +45,7 @@ export default function CardGameList({ game, preferito }) {
                     <div className="hidden md:flex md:flex-col">
                         <div className="flex flex-wrap max-w-full">
                             {gameData.genres.map((genre, index) => (
-                                <Link key={index} to={`/games/${genre.name}`}>
+                                <Link key={index} to={`/games/${genre.slug}`}>
                                     <p className="text-[11px] font-bold text-red-800 py-0.5 pr-0.5 md:mx-2 md:hover:scale-105 md:hover:font-extrabold" key={genre.id}>{genre.name}</p>
                                 </Link>
                             ))}

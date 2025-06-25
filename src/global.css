@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/* :root{
+  --bg-color-blue50: #eff6ff;
+  --text-color-blue500: #2563eb;
+  --bg-color-blue500: #2563eb;
+  --text-color-red600: #dc2626;
+  --bg-color-red600: #dc2626;
+} */
 /* nasconde le scrollbar in tutti i browser */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
