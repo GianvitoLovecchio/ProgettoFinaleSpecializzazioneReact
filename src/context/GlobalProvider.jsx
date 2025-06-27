@@ -22,7 +22,7 @@ export default function GlobalProvider({ children }) {
         { title: "Voto utenti decrescente", value: "-rating" },
     ];
 
-    const baseUrl = `https://api.rawg.io/api/games?key=95c63224923a4b51aa9ed6a0e37cf486`;
+    const baseUrl = `https://api.rawg.io/api/games?key=b7b1b42400a549ada462bed213a5844a`;
 
     // funzione per aggiornare l'ordinamento (sort + ascendente/descendente)
     const setOrdering = (newSort, newAsc = asc) => {

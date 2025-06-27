@@ -8,7 +8,7 @@ import LazyLoadImageList from "./LazyLoadImageList"
 
 export default function CardGameList({ game, preferito }) {
     const { session } = useContext(SessionContext);
-    const { data, error, load } = useFetch(`https://api.rawg.io/api/games/${game.game_id}?key=95c63224923a4b51aa9ed6a0e37cf486`);
+    const { data, error, load } = useFetch(`https://api.rawg.io/api/games/${game.game_id}?key=b7b1b42400a549ada462bed213a5844a`);
     const gameData = preferito ? data : game;
 
     if (preferito && !data) { return <Loader /> }

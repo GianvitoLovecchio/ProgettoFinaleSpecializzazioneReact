@@ -13,13 +13,13 @@ export default function PlatformPage_index() {
     const { sort, setSort } = useContext(GlobalContext);
      const [currentPage, setCurrentPage] = useState(1);
       const [isFetchingMore, setIsFetchingMore] = useState(false);
-      const initialUrl = (`https://api.rawg.io/api/games?key=95c63224923a4b51aa9ed6a0e37cf486&platforms=${id}&page=${currentPage}`);
+      const initialUrl = (`https://api.rawg.io/api/games?key=b7b1b42400a549ada462bed213a5844a&platforms=${id}&page=${currentPage}`);
       const [allGames, setAllGames] = useState([]);
     const { data, loading, error, updateUrl } = useFetch(initialUrl);
     const [cardLayout, setCardLayout] = useState(true);
 
      useEffect(() => {
-        const newUrl = (`https://api.rawg.io/api/games?key=95c63224923a4b51aa9ed6a0e37cf486&platforms=${id}&page=${currentPage}${sort ? `&ordering=${sort}` : ''}`);
+        const newUrl = (`https://api.rawg.io/api/games?key=b7b1b42400a549ada462bed213a5844a&platforms=${id}&page=${currentPage}${sort ? `&ordering=${sort}` : ''}`);
         updateUrl(newUrl);
     }, [id, sort, updateUrl, currentPage]);
 

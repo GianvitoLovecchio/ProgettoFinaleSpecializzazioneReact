@@ -11,12 +11,12 @@ export default function HomePage_index() {
     const [currentPage, setCurrentPage] = useState(1);
     const [isFetchingMore, setIsFetchingMore] = useState(false);
     const [allGames, setAllGames] = useState([]);
-    const initialUrl = `https://api.rawg.io/api/games?key=95c63224923a4b51aa9ed6a0e37cf486&page=${currentPage}`;
+    const initialUrl = `https://api.rawg.io/api/games?key=b7b1b42400a549ada462bed213a5844a&page=${currentPage}`;
     const { data, error, loading, updateUrl } = useFetch(initialUrl);
     const [cardLayout, setCardLayout] = useState(true);
 
     useEffect(() => {
-        const newUrl = `https://api.rawg.io/api/games?key=95c63224923a4b51aa9ed6a0e37cf486&page=${currentPage}${sort ? `&ordering=${sort}` : ''}`;
+        const newUrl = `https://api.rawg.io/api/games?key=b7b1b42400a549ada462bed213a5844a&page=${currentPage}${sort ? `&ordering=${sort}` : ''}`;
         updateUrl(newUrl);
         console.log("entrato")
     }, [currentPage, updateUrl, sort]);

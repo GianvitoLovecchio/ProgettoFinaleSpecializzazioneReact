@@ -15,10 +15,10 @@ export default function Navbar() {
   const navigate = useNavigate();
   const { session, logout } = useContext(SessionContext);
   const { profile, avatarImgUrl } = useProfile();
-  const {setProfile,  setAvatarImgUrl } = useProfile();
+  const { setProfile, setAvatarImgUrl } = useProfile();
 
 
-    
+
   const handleLogout = async () => {
     await supabase.auth.signOut(); // chiama supabase
     logout(); // centralizzato: fa tutto (modale, pulizia sessione)
@@ -26,7 +26,7 @@ export default function Navbar() {
     setAvatarImgUrl(null);
     setIsOpen(false); // chiudi il mobile menu se aperto
     navigate("/"); // vai alla home
-};
+  };
 
 
   return (
@@ -94,32 +94,40 @@ export default function Navbar() {
         <div className="md:hidden bg-blue-100 shadow-lg px-4 py-2 space-y-2">
           {!session ? (
             <>
-              <Link
-                to="/register"
-                onClick={() => setIsOpen(false)}
-                className="block text-blue-600"
-              >
-                Registrati
-              </Link>
-              <Link
-                to="/login"
-                onClick={() => setIsOpen(false)}
-                className="block text-blue-600"
-              >
-                Login
-              </Link>
+              <div className="flex justify-evenly">
+                <Link
+                  to="/register"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center text-lg  font-bold text-center text-blue-600"
+                >
+                  Registrati
+                </Link>
+                <div className="border-r-3 h-9 text-blue-600"></div>
+                <Link
+                  to="/login"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center text-lg  font-bold text-center text-blue-600"
+                >
+                  Login
+                </Link>
+              </div>
+
             </>
           ) : (
             <>
               <span className="block text-blue-600 font-semibold">Ciao {profile?.username}</span>
-              <Link
-                to="/account"
-                onClick={() => setIsOpen(false)}
-                className="block text-blue-600 text-lg"
-              >
-                Il mio profilo
-              </Link>
-              <button onClick={handleLogout} href="#" className="block font-bold text-lg text-red-600">Logout</button>
+              <div className="flex justify-evenly">
+                <Link
+                  to="/account"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center text-blue-600 text-lg font-bold"
+                >
+                  Il mio profilo
+                </Link>
+                 <div className="border-r-3 h-9 text-blue-600"></div>
+                <button onClick={handleLogout} href="#" className="flex items-center font-bold text-lg text-red-600">Logout</button>
+              </div>
+
             </>
           )}
         </div>

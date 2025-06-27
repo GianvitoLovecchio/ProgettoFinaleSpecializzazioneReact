@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router";
 import { ChevronsRight, Heart, Gamepad2, ChevronsDown, Joystick } from "lucide-react";
 import FavoritesContext from "../context/FavoritesContext";
@@ -10,11 +10,18 @@ export default function Sidebar() {
   const { favorites } = useContext(FavoritesContext);
   const { session } = useContext(SessionContext);
   const lunghezza = favorites?.length;
-  const { data } = useFetch("https://api.rawg.io/api/genres?key=95c63224923a4b51aa9ed6a0e37cf486");
+  const { data } = useFetch("https://api.rawg.io/api/genres?key=b7b1b42400a549ada462bed213a5844a");
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [isGenresOpen, setIsGenresOpen] = useState(false);
   const [isPlatformsOpen, setIsPlatformsOpen] = useState(false); // stato per piattaforme mobile
+
+  useEffect(() => {
+    if (isOpen) {
+      setIsGenresOpen(false);
+      setIsPlatformsOpen(false);
+    }
+  }, [isOpen]);
 
   const handleNavigate = (path) => {
     setIsOpen(false);
@@ -38,7 +45,7 @@ export default function Sidebar() {
 
           {/* BOttone generi */}
           <details className="group rounded">
-            <summary className="flex list-none cursor-pointer text-blue-600 font-bold text-2xl my-1">
+            <summary className="flex list-none cursor-pointer text-blue-600 font-bold text-xl my-1">
               <Gamepad2 strokeWidth={2} size={22} className="flex my-auto mx-2" />
               Generi
               <ChevronsDown
@@ -61,9 +68,9 @@ export default function Sidebar() {
           </details>
           {/* bottone piattaforme */}
           <details className="group rounded">
-            <summary className="flex list-none cursor-pointer text-blue-600 font-bold text-2xl my-1">
+            <summary className="flex list-none cursor-pointer text-blue-600 font-bold text-xl my-1">
               <Joystick strokeWidth={2} size={22} className="flex my-auto mx-2" />
-              Piattaforme
+              Top Piattaforme
               <ChevronsDown
                 size={22}
                 strokeWidth={3}
@@ -114,7 +121,7 @@ export default function Sidebar() {
                 className="flex items-center h-12 my-2 text-blue-600"
               >
                 <Heart size={32} strokeWidth={2.5} className="my-auto mx-2" />
-                {isOpen && <span className="ml-1 text-blue-600 font-bold text-xl">Preferiti ({lunghezza})</span>}
+                {isOpen && <span className="ml-1 text-blue-600 font-bold text-lg">Preferiti ({lunghezza})</span>}
               </button>
             }
 
@@ -126,18 +133,19 @@ export default function Sidebar() {
                 open={isGenresOpen}
                 onClick={() => setIsGenresOpen((prev) => !prev)}
               >
-                <summary className="flex list-none cursor-pointer text-blue-600 font-bold text-xl items-center">
+                <summary className="flex list-none cursor-pointer text-blue-600 font-bold text-lg items-center">
                   <Gamepad2 size={32} strokeWidth={2.5} className="my-2 mx-2" />
                   Generi
                   <ChevronsDown
                     size={20}
                     strokeWidth={3}
-                    className="text-red-700 mt-1.5 ml-2 transition duration-500 group-open:rotate-180"
+                    className="text-red-700  ml-2 flex items-center transition duration-500 group-open:rotate-180"
                   />
                 </summary>
                 <ul className="py-2 ml-4">
                   {data?.results.map((genre) => (
-                    <li key={genre.id} className="text-md font-semibold text-blue-600 py-1">
+                    <li key={genre.id} className="flex text-sm font-semibold text-blue-600 py-1">
+                      <img src={genre.image_background} alt="" className="rounded-full mx-2 mr-3 h-7 w-7 " />
                       <button
                         onClick={() => handleNavigate(`/games/${genre.slug}`)}
                         className="text-left w-full"
@@ -168,13 +176,13 @@ export default function Sidebar() {
                 open={isPlatformsOpen}
                 onClick={() => setIsPlatformsOpen((prev) => !prev)}
               >
-                <summary className="flex list-none cursor-pointer text-blue-600 font-bold text-xl my-2 items-center">
+                <summary className="flex list-none cursor-pointer text-blue-600 font-bold text-md my-2 items-center">
                   <Joystick size={32} strokeWidth={2.5} className="my-auto mx-2" />
-                  Piattaforme
+                  Top Piattaforme
                   <ChevronsDown
                     size={20}
                     strokeWidth={3}
-                    className="text-red-700 mt-1.5 ml-2 transition duration-500 group-open:rotate-180"
+                    className="text-red-700 flex items-center ml-2 transition duration-500 group-open:rotate-180"
                   />
                 </summary>
                 <ul className="py-2 ml-4">
@@ -201,7 +209,7 @@ export default function Sidebar() {
             {!isOpen && (
               <button
                 onClick={() => setIsOpen(true)}
-                className="flex text-blue-600 mx-2 text-xl my-2"
+                className="flex text-blue-600 mx-2 text-xl "
               >
                 <Joystick size={32} strokeWidth={2.5} />
               </button>
